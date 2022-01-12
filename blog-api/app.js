@@ -1,18 +1,12 @@
 const express = require('express');
-const dotenv = require('dotenv');
-
-
 const app = express();
 
-// app.get('/', (req, res) => {
-//     res.send("Hello World");
-// });
-
-const connectDB = require('./config/db');
-
-//Load Config
+const dotenv = require('dotenv');
 dotenv.config({path: './config/config.env'});
 
+const connectDB = require('./config/db');
 connectDB();
 
-app.listen(3000);
+app.use(express.json());
+
+app.listen(process.env.PORT, () => console.log('Server Started'));

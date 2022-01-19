@@ -15,8 +15,13 @@ router.get('/:characterId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+    const character = {
+        name: req.body.name,
+        health: req.body.health
+    };
     res.status(201).json({
-        message: 'Handling POST requests to /character'
+        message: 'Handling POST requests to /character',
+        character: character
     });
 });
 

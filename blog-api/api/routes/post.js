@@ -15,8 +15,13 @@ router.get('/:postId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+    const post = {
+        title: req.body.title,
+        content: req.body.content
+    }
     res.status(201).json({
-        message: 'Handling POST requests to /post'
+        message: 'Handling POST requests to /post',
+        post: post
     });
 });
 

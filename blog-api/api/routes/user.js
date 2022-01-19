@@ -15,8 +15,13 @@ router.get('/:userId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+    const user = {
+        username: req.body.username,
+        email: req.body.email
+    }
     res.status(201).json({
-        message: 'Handling POST requests to /user'
+        message: 'Handling POST requests to /user',
+        user: user
     });
 });
 

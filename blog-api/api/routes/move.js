@@ -15,8 +15,13 @@ router.get('/:moveId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+    const move = {
+        name: req.body.name,
+        uses: req.body.uses
+    }
     res.status(201).json({
-        message: 'Handling POST requests to /move'
+        message: 'Handling POST requests to /move',
+        move: move
     });
 });
 

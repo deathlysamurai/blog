@@ -24,6 +24,18 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true
+        }, 
+        level: {
+            type: Number,
+            required: true
+        },
+        xp: {
+            type: Number,
+            required: true
+        },
+        characters: {
+            type: [String],
+            required: true
         }
     },
     {timestamps: true}

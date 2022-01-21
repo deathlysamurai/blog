@@ -9,10 +9,10 @@ const postRoutes = require('./api/routes/post');
 const userRoutes = require('./api/routes/user');
 
 const dotenv = require('dotenv');
-dotenv.config({path: '.api/config/config.env'});
+dotenv.config({path: './api/config/config.env'});
 
-// const connectDB = require('./config/db');
-// connectDB();
+const connectDB = require('./api/config/db');
+connectDB();
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));

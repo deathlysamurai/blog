@@ -11,19 +11,19 @@ const postSchema = new mongoose.Schema(
             type: String,
             required: true
         }, 
-        date: {
-            type: Date,
-            required: true
-        },
-        tags: {
-            //Used for narrowing down searches, such as movies, or workouts
-            type: [String],
-            required: false
-        },
-        image: {
-            type: String,
-            required: false
-        }
+        // date: {
+        //     type: Date,
+        //     required: true
+        // },
+        // tags: {
+        //     //Used for narrowing down searches, such as movies, or workouts
+        //     type: [String],
+        //     required: false
+        // },
+        // image: {
+        //     type: String,
+        //     required: false
+        // }
     },
     {timestamps: true}
 );

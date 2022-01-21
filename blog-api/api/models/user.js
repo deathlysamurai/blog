@@ -3,14 +3,14 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema(
     {
         _id: mongoose.Schema.Types.ObjectId,
-        firstName: {
-            type: String,
-            required: true
-        },
-        lastName: {
-            type: String,
-            required: true
-        },
+        // firstName: {
+        //     type: String,
+        //     required: true
+        // },
+        // lastName: {
+        //     type: String,
+        //     required: true
+        // },
         username: {
             type: String,
             required: true,
@@ -22,22 +22,22 @@ const userSchema = mongoose.Schema(
             unique: true,
             trim: true
         },
-        password: {
-            type: String,
-            required: true
-        }, 
-        level: {
-            type: Number,
-            required: true
-        },
-        xp: {
-            type: Number,
-            required: true
-        },
-        characters: {
-            type: [String],
-            required: true
-        }
+        // password: {
+        //     type: String,
+        //     required: true
+        // }, 
+        // level: {
+        //     type: Number,
+        //     required: true
+        // },
+        // xp: {
+        //     type: Number,
+        //     required: true
+        // },
+        // characters: {
+        //     type: [String],
+        //     required: true
+        // }
     },
     {timestamps: true}
 );

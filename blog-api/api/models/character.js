@@ -7,26 +7,26 @@ const characterSchema = new mongoose.Schema(
             type: String,
             required: true
         }, 
-        description: {
-            type: String,
-            required: true
-        },
-        image: {
-            type: String,
-            required: true
-        },
-        moves: {
-            type: [String],
-            required: true
-        },
+        // description: {
+        //     type: String,
+        //     required: true
+        // },
+        // image: {
+        //     type: String,
+        //     required: true
+        // },
+        // moves: {
+        //     type: [String],
+        //     required: true
+        // },
         health: {
             type: Number,
             required: true
         },
-        speed: {
-            type: Number,
-            required: true
-        }
+        // speed: {
+        //     type: Number,
+        //     required: true
+        // }
     }
 );
 

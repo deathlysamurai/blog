@@ -5,16 +5,25 @@ const mongoose = require('mongoose');
 const Post = require('../models/post');
 
 router.get('/', (req, res, next) => {
-    //Use .where behind the .find to had query parameters
+    //Use .where behind the .find to add query parameters
     Post
         .find()
+        .select('-__v')
         .exec()
         .then(docs => {
-            console.log(docs);
-            res.status(200).json({
-                message: 'Handling GET requests to /post',
-                docs
-            });
+            const response = {
+                count: docs.length,
+                posts: docs.map(doc => {
+                    return {
+                        ...doc['_doc'],
+                        request: {
+                            type: 'GET',
+                            url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + doc._id
+                        }
+                    }
+                })
+            };
+            res.status(200).json(response);
         })
         .catch(err => {
             console.log(err);
@@ -28,13 +37,17 @@ router.get('/:postId', (req, res, next) => {
     const id = req.params.postId;
 
     Post.findById(id)
+        .select('-__v')
         .exec()
         .then(doc => {
             console.log("From Database", doc);
             if (doc) {
                 res.status(200).json({
-                    message: 'Your post id is: ' + id,
-                    doc
+                    post: doc,
+                    request: {
+                        type: 'GET',
+                        url: req.protocol + '://' + req.headers.host + req.baseUrl
+                    }
                 });
             } else {
                 res.status(404).json({
@@ -60,11 +73,15 @@ router.post('/', (req, res, next) => {
     post
         .save()
         .then(result => {
-            console.log(result);
-            res.status(201).json({
-                message: 'Handling POST requests to /post',
-                post: post
-            });
+            delete result['_doc']['__v'];
+            const response = {
+                ...result['_doc'],
+                request: {
+                    type: 'GET',
+                    url: req.protocol + '://' + req.headers.host + req.originalUrl + result._id 
+                }
+            };
+            res.status(201).json(response);
         })
         .catch(err => {
             console.log(err);
@@ -85,10 +102,11 @@ router.patch('/:postId', (req, res, next) => {
     Post.updateOne({_id: id}, {$set: updateOps})
         .exec()
         .then(result => {
-            console.log(result);
             res.status(200).json({
-                message: 'Updated post: ' + id,
-                result
+                request: {
+                    type: 'GET',
+                    url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + id
+                }
             });
         })
         .catch(err => {

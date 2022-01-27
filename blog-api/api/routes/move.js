@@ -5,16 +5,25 @@ const mongoose = require('mongoose');
 const Move = require('../models/move');
 
 router.get('/', (req, res, next) => {
-    //Use .where behind the .find to had query parameters
+    //Use .where behind the .find to add query parameters
     Move
         .find()
+        .select('-__v')
         .exec()
         .then(docs => {
-            console.log(docs);
-            res.status(200).json({
-                message: 'Handling GET requests to /move',
-                docs
-            });
+            const response = {
+                count: docs.length,
+                moves: docs.map(doc => {
+                    return {
+                        ...doc['_doc'],
+                        request: {
+                            type: 'GET',
+                            url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + doc._id
+                        }
+                    }
+                })
+            };
+            res.status(200).json(response);
         })
         .catch(err => {
             console.log(err);
@@ -28,13 +37,17 @@ router.get('/:moveId', (req, res, next) => {
     const id = req.params.moveId;
 
     Move.findById(id)
+        .select('-__v')
         .exec()
         .then(doc => {
             console.log("From Database", doc);
             if (doc) {
                 res.status(200).json({
-                    message: 'Your move id is: ' + id,
-                    doc
+                    move: doc,
+                    request: {
+                        type: 'GET',
+                        url: req.protocol + '://' + req.headers.host + req.baseUrl
+                    }
                 });
             } else {
                 res.status(404).json({
@@ -60,11 +73,15 @@ router.post('/', (req, res, next) => {
     move
         .save()
         .then(result => {
-            console.log(result);
-            res.status(201).json({
-                message: 'Handling POST requests to /move',
-                move: move
-            });
+            delete result['_doc']['__v'];
+            const response = {
+                ...result['_doc'],
+                request: {
+                    type: 'GET',
+                    url: req.protocol + '://' + req.headers.host + req.originalUrl + result._id 
+                }
+            };
+            res.status(201).json(response);
         })
         .catch(err => {
             console.log(err);
@@ -85,10 +102,11 @@ router.patch('/:moveId', (req, res, next) => {
     Move.updateOne({_id: id}, {$set: updateOps})
         .exec()
         .then(result => {
-            console.log(result);
             res.status(200).json({
-                message: 'Updated move: ' + id,
-                result
+                request: {
+                    type: 'GET',
+                    url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + id
+                }
             });
         })
         .catch(err => {

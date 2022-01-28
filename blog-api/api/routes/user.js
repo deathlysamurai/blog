@@ -78,7 +78,7 @@ router.post('/', (req, res, next) => {
                 ...result['_doc'],
                 request: {
                     type: 'GET',
-                    url: req.protocol + '://' + req.headers.host + req.originalUrl + result._id 
+                    url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + result._id 
                 }
             };
             res.status(201).json(response);

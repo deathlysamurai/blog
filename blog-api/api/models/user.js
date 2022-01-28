@@ -35,8 +35,9 @@ const userSchema = mongoose.Schema(
         //     required: true
         // },
         // characters: {
-        //     type: [String],
-        //     required: true
+        //     type: [mongoose.Schema.Types.ObjectId],
+        //     ref: 'Character',
+        //     required: false
         // }
     },
     {timestamps: true}

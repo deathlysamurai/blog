@@ -15,10 +15,11 @@ const characterSchema = new mongoose.Schema(
         //     type: String,
         //     required: true
         // },
-        // moves: {
-        //     type: [String],
-        //     required: true
-        // },
+        moves: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'Move',
+            required: true
+        },
         health: {
             type: Number,
             required: true

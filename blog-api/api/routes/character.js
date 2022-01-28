@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Character = require('../models/character');
+const Move = require('../models/move');
 
 router.get('/', (req, res, next) => {
     //Use .where behind the .find to add query parameters
@@ -46,7 +47,10 @@ router.get('/:characterId', (req, res, next) => {
                     character: doc,
                     request: {
                         type: 'GET',
-                        url: req.protocol + '://' + req.headers.host + req.baseUrl
+                        url: req.protocol + '://' + req.headers.host + req.baseUrl,
+                        moves: doc.moves.map(result => {
+                            return req.protocol + '://' + req.headers.host + "/move/" + result
+                        })
                     }
                 });
             } else {
@@ -64,31 +68,57 @@ router.get('/:characterId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    const character = new Character({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        health: req.body.health
-    });
+    Move.find().exec().then(results => {
+        if (req.body.moves.length == 0) {
+            return res.status(404).json({message: "Moves may not be empty."});
+        } 
 
-    character
-        .save()
-        .then(result => {
-            delete result['_doc']['__v'];
-            const response = {
-                ...result['_doc'],
-                request: {
-                    type: 'GET',
-                    url: req.protocol + '://' + req.headers.host + req.originalUrl + result._id 
+        let movesExist = true;
+        for (const move of req.body.moves) {
+            let moveExist = false;
+            for (const result of results) {
+                if (result._id == move) {
+                    moveExist = true
+                    break;
                 }
-            };
-            res.status(201).json(response);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
+            }
+            if (!moveExist) {
+                movesExist = false;
+                break;
+            }
+        }
+        if (!movesExist) {
+            return res.status(404).json({message: "A move was not found."});
+        } 
+
+        const character = new Character({
+            _id: new mongoose.Types.ObjectId(),
+            name: req.body.name,
+            moves: req.body.moves,
+            health: req.body.health
         });
+
+        return character.save();
+    }).then(result => {
+        if (res.statusCode == 404) {
+            return res;
+        }
+
+        delete result['_doc']['__v'];
+        const response = {
+            ...result['_doc'],
+            request: {
+                type: 'GET',
+                url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + result._id 
+            }
+        };
+        res.status(201).json(response);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    });
 });
 
 router.patch('/:characterId', (req, res, next) => {

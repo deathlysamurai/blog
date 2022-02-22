@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
     Character
         .find()
         .select('-__v')
+        .populate('moves', '-__v')
         .exec()
         .then(docs => {
             const response = {
@@ -39,6 +40,7 @@ router.get('/:characterId', (req, res, next) => {
 
     Character.findById(id)
         .select('-__v')
+        .populate('moves', '-__v')
         .exec()
         .then(doc => {
             console.log("From Database", doc);

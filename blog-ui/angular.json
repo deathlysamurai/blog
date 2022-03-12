@@ -102,5 +102,13 @@
       }
     }
   },
+  "schematics": {
+    "@nrwl/schematics:component": {
+      "styleext": "scss"
+    },
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "defaultProject": "blog-ui"
 }

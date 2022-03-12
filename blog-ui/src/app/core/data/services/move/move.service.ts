@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Move } from '../../Models/move.model';
+import { Move } from '../../models/move.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

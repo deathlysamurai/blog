@@ -2,21 +2,23 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const path = require('path');
 
-const characterRoutes = require('./api/routes/character');
-const moveRoutes = require('./api/routes/move');
-const postRoutes = require('./api/routes/post');
-const userRoutes = require('./api/routes/user');
+const charactersRoutes = require('./routes/characters');
+const movesRoutes = require('./routes/moves');
+const postsRoutes = require('./routes/posts');
+const usersRoutes = require('./routes/users');
 
 const dotenv = require('dotenv');
-dotenv.config({path: './api/config/config.env'});
+dotenv.config({path: './config/config.env'});
 
-const connectDB = require('./api/config/db');
+const connectDB = require('./config/db');
 connectDB();
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use('/images', express.static(path.join('images')));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); //Change * to my website domain when finished to only allow my website to access
@@ -31,10 +33,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/character', characterRoutes);
-app.use('/move', moveRoutes);
-app.use('/post', postRoutes);
-app.use('/user', userRoutes);
+app.use('/characters', charactersRoutes);
+app.use('/moves', movesRoutes);
+app.use('/posts', postsRoutes);
+app.use('/users', usersRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');

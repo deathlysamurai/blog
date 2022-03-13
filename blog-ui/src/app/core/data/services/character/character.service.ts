@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 export class CharacterService {
 
   private readonly API_ROUTES = {
-    addCharacter: '/character',
-    deleteCharacter: (characterId: string) => `/character/${characterId}`,
-    getCharacter: (characterId: string) => `/character/${characterId}`,
-    getCharacters: '/character',
-    updateCharacter: (characterId: string) => `/character/${characterId}`
+    addCharacter: '/characters',
+    deleteCharacter: (characterId: string) => `/characters/${characterId}`,
+    getCharacter: (characterId: string) => `/characters/${characterId}`,
+    getCharacters: '/characters',
+    updateCharacter: (characterId: string) => `/characters/${characterId}`
   }
   private baseUrl = environment.baseUrl;
 

@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 export class PostService {
 
   private readonly API_ROUTES = {
-    addPost: '/post',
-    deletePost: (postId: string) => `/post/${postId}`,
-    getPost: (postId: string) => `/post/${postId}`,
-    getPosts: '/post',
-    updatePost: (postId: string) => `/post/${postId}`
+    addPost: '/posts',
+    deletePost: (postId: string) => `/posts/${postId}`,
+    getPost: (postId: string) => `/posts/${postId}`,
+    getPosts: '/posts',
+    updatePost: (postId: string) => `/posts/${postId}`
   }
   private baseUrl = environment.baseUrl;
 

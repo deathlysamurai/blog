@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 export class MoveService {
 
   private readonly API_ROUTES = {
-    addMove: '/move',
-    deleteMove: (moveId: string) => `/move/${moveId}`,
-    getMove: (moveId: string) => `/move/${moveId}`,
-    getMoves: '/move',
-    updateMove: (moveId: string) => `/move/${moveId}`
+    addMove: '/moves',
+    deleteMove: (moveId: string) => `/moves/${moveId}`,
+    getMove: (moveId: string) => `/moves/${moveId}`,
+    getMoves: '/moves',
+    updateMove: (moveId: string) => `/moves/${moveId}`
   }
   private baseUrl = environment.baseUrl;
 

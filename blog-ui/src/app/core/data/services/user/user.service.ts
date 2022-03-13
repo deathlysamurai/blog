@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   private readonly API_ROUTES = {
-    addUser: '/user',
-    deleteUser: (userId: string) => `/user/${userId}`,
-    getUser: (userId: string) => `/user/${userId}`,
-    getUsers: '/user',
-    updateUser: (userId: string) => `/user/${userId}`
+    addUser: '/users',
+    deleteUser: (userId: string) => `/users/${userId}`,
+    getUser: (userId: string) => `/users/${userId}`,
+    getUsers: '/users',
+    updateUser: (userId: string) => `/users/${userId}`
   }
   private baseUrl = environment.baseUrl;
 

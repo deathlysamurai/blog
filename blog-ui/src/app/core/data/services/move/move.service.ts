@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Move } from '../../models/move.model';
+import { MoveResponse } from '../../models/moveResponse.model';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,23 +20,23 @@ export class MoveService {
 
   constructor(private http: HttpClient) { }
 
-  public addMove(move: Move) {
-    return this.http.post(this.baseUrl + this.API_ROUTES.addMove, move);
+  // public addMove(move: Move) {
+  //   return this.http.post(this.baseUrl + this.API_ROUTES.addMove, move);
+  // }
+
+  // public deleteMove(move: Move) {
+  //   return this.http.delete(this.baseUrl + this.API_ROUTES.deleteMove(move.id));
+  // }
+
+  // public getMove(move: Move) {
+  //   return this.http.get(this.baseUrl + this.API_ROUTES.getMove(move.id));
+  // }
+
+  public getMoves(): Observable<MoveResponse> {
+    return this.http.get<MoveResponse>(this.baseUrl + this.API_ROUTES.getMoves);
   }
 
-  public deleteMove(move: Move) {
-    return this.http.delete(this.baseUrl + this.API_ROUTES.deleteMove(move.id));
-  }
-
-  public getMove(move: Move) {
-    return this.http.get(this.baseUrl + this.API_ROUTES.getMove(move.id));
-  }
-
-  public getMoves() {
-    return this.http.get(this.baseUrl + this.API_ROUTES.getMoves);
-  }
-
-  public updateMove(move: Move) {
-    return this.http.put(this.baseUrl + this.API_ROUTES.updateMove(move.id), move);
-  }
+  // public updateMove(move: Move) {
+  //   return this.http.put(this.baseUrl + this.API_ROUTES.updateMove(move.id), move);
+  // }
 }

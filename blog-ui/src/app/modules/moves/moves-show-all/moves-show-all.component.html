@@ -1,1 +1,6 @@
-<p>moves-show-all works!</p>
+<h1>Count: {{ totalMoves }}</h1>
+<table *ngFor="let move of moves">
+    <tr>
+        <td>{{ move.name }}</td>
+    </tr>
+</table>

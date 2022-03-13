@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.use((res, req, next) => {
+app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); //Change * to my website domain when finished to only allow my website to access
     res.header(
         'Access-Control-Allow-Headers', 

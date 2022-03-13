@@ -1,1 +1,6 @@
-<p>posts-show-all works!</p>
+<h1>Count: {{ totalPosts }}</h1>
+<table *ngFor="let post of posts">
+    <tr>
+        <td>{{ post.title }}</td>
+    </tr>
+</table>

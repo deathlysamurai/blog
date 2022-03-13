@@ -1,1 +1,6 @@
-<p>characters-show-all works!</p>
+<h1>Count: {{ totalCharacters }}</h1>
+<table *ngFor="let character of characters">
+    <tr>
+        <td>{{ character.name }}</td>
+    </tr>
+</table>

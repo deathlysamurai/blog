@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const isLoggedIn = require('../middleware/is-logged-in');
+const isAdmin = require('../middleware/is-admin');
 
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -93,7 +95,7 @@ router.get('/:characterId', (req, res, next) => {
         });
 });
 
-router.post('/', upload.single('imagePath'), (req, res, next) => {
+router.post('/', isLoggedIn, isAdmin, upload.single('imagePath'), (req, res, next) => {
     console.log(req.file);
     Move.find().exec().then(results => {
         if (req.body.moves.length == 0) {
@@ -149,7 +151,7 @@ router.post('/', upload.single('imagePath'), (req, res, next) => {
     });
 });
 
-router.patch('/:characterId', (req, res, next) => {
+router.patch('/:characterId', isLoggedIn, isAdmin, (req, res, next) => {
     const id = req.params.characterId;
     const updateOps = {};
 
@@ -175,7 +177,7 @@ router.patch('/:characterId', (req, res, next) => {
         });
 });
 
-router.delete('/:characterId', (req, res, next) => {
+router.delete('/:characterId', isLoggedIn, isAdmin, (req, res, next) => {
     const id = req.params.characterId;
 
     Character.deleteOne({_id: id})

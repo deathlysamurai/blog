@@ -20,12 +20,13 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
             unique: true,
-            trim: true
+            trim: true,
+            match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
         },
-        // password: {
-        //     type: String,
-        //     required: true
-        // }, 
+        password: {
+            type: String,
+            required: true
+        }, 
         // level: {
         //     type: Number,
         //     required: true
@@ -38,7 +39,11 @@ const userSchema = mongoose.Schema(
         //     type: [mongoose.Schema.Types.ObjectId],
         //     ref: 'Character',
         //     required: false
-        // }
+        // },
+        admin: {
+            type: Boolean,
+            default: false
+        }
     },
     {timestamps: true}
 );

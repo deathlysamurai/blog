@@ -10,18 +10,19 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   private readonly API_ROUTES = {
-    addUser: '/users',
+    registerUser: '/users/register',
     deleteUser: (userId: string) => `/users/${userId}`,
     getUser: (userId: string) => `/users/${userId}`,
     getUsers: '/users',
-    updateUser: (userId: string) => `/users/${userId}`
+    updateUser: (userId: string) => `/users/${userId}`,
+    loginUser: '/users/login'
   }
   private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
-  // public addUser(user: User) {
-  //   return this.http.post(this.baseUrl + this.API_ROUTES.addUser, user);
+  // public registerUser(user: User) {
+  //   return this.http.post(this.baseUrl + this.API_ROUTES.registerUser, user);
   // }
 
   // public deleteUser(user: User) {
@@ -38,5 +39,9 @@ export class UserService {
 
   // public updateUser(user: User) {
   //   return this.http.put(this.baseUrl + this.API_ROUTES.updateUser(user.id), user);
+  // }
+
+  // public loginUser(user: User) {
+  //   return this.http.post(this.baseUrl + this.API_ROUTES.loginUser, user);
   // }
 }

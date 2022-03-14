@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const isLoggedIn = require('../middleware/is-logged-in');
+const isAdmin = require('../middleware/is-admin');
 
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -87,7 +89,7 @@ router.get('/:postId', (req, res, next) => {
         });
 });
 
-router.post('/', upload.single('imagePath'), (req, res, next) => {
+router.post('/', isLoggedIn, isAdmin, upload.single('imagePath'), (req, res, next) => {
     const post = new Post({
         _id: new mongoose.Types.ObjectId,
         title: req.body.title,
@@ -116,7 +118,7 @@ router.post('/', upload.single('imagePath'), (req, res, next) => {
         });
 });
 
-router.patch('/:postId', (req, res, next) => {
+router.patch('/:postId', isLoggedIn, isAdmin, (req, res, next) => {
     const id = req.params.postId;
     const updateOps = {};
 
@@ -142,7 +144,7 @@ router.patch('/:postId', (req, res, next) => {
         });
 });
 
-router.delete('/:postId', (req, res, next) => {
+router.delete('/:postId', isLoggedIn, isAdmin, (req, res, next) => {
     const id = req.params.postId;
 
     Post.deleteOne({_id: id})

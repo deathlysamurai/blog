@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const isLoggedIn = require('../middleware/is-logged-in');
+const isAdmin = require('../middleware/is-admin');
 
 const Move = require('../models/move');
 
@@ -63,7 +65,7 @@ router.get('/:moveId', (req, res, next) => {
         });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', isLoggedIn, isAdmin, (req, res, next) => {
     const move = new Move({
         _id: new mongoose.Types.ObjectId,
         name: req.body.name,
@@ -91,7 +93,7 @@ router.post('/', (req, res, next) => {
         });
 });
 
-router.patch('/:moveId', (req, res, next) => {
+router.patch('/:moveId', isLoggedIn, isAdmin, (req, res, next) => {
     const id = req.params.moveId;
     const updateOps = {};
 
@@ -117,7 +119,7 @@ router.patch('/:moveId', (req, res, next) => {
         });
 });
 
-router.delete('/:moveId', (req, res, next) => {
+router.delete('/:moveId', isLoggedIn, isAdmin, (req, res, next) => {
     const id = req.params.moveId;
 
     Move.deleteOne({_id: id})

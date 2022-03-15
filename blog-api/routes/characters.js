@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isLoggedIn = require('../middleware/is-logged-in');
-const isAdmin = require('../middleware/is-admin');
+const auth = require('../middleware/auth');
 const CharactersController = require('../controllers/characters');
 
 const multer = require('multer');
@@ -32,10 +31,10 @@ router.get('/', CharactersController.characters_get_all);
 
 router.get('/:characterId', CharactersController.characters_get_one);
 
-router.post('/', isLoggedIn, isAdmin, upload.single('imagePath'), CharactersController.characters_create_character);
+router.post('/', auth.isLoggedIn, auth.isAdmin, upload.single('imagePath'), CharactersController.characters_create_character);
 
-router.patch('/:characterId', isLoggedIn, isAdmin, CharactersController.characters_update_character);
+router.patch('/:characterId', auth.isLoggedIn, auth.isAdmin, CharactersController.characters_update_character);
 
-router.delete('/:characterId', isLoggedIn, isAdmin, CharactersController.characters_delete_character);
+router.delete('/:characterId', auth.isLoggedIn, auth.isAdmin, CharactersController.characters_delete_character);
 
 module.exports = router;

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isLoggedIn = require('../middleware/is-logged-in');
-const isAdmin = require('../middleware/is-admin');
+const auth = require('../middleware/auth');
 const PostsController = require('../controllers/posts');
 
 const multer = require('multer');
@@ -32,10 +31,10 @@ router.get('/', PostsController.posts_get_all);
 
 router.get('/:postId', PostsController.posts_get_one);
 
-router.post('/', isLoggedIn, isAdmin, upload.single('imagePath'), PostsController.posts_create_post);
+router.post('/', auth.isLoggedIn, auth.isAdmin, upload.single('imagePath'), PostsController.posts_create_post);
 
-router.patch('/:postId', isLoggedIn, isAdmin, PostsController.posts_update_post);
+router.patch('/:postId', auth.isLoggedIn, auth.isAdmin, PostsController.posts_update_post);
 
-router.delete('/:postId', isLoggedIn, isAdmin, PostsController.posts_delete_post);
+router.delete('/:postId', auth.isLoggedIn, auth.isAdmin, PostsController.posts_delete_post);
 
 module.exports = router;

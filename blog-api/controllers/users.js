@@ -33,9 +33,7 @@ exports.users_get_all = (req, res, next) => {
 };
 
 exports.users_get_one = (req, res, next) => {
-    const id = req.params.userId;
-
-    User.findById(id)
+    User.findById(req.params.userId)
         .select('-__v')
         .exec()
         .then(doc => {
@@ -147,6 +145,7 @@ exports.users_login_user = (req, res, next) => {
                     );
                     return res.status(200).json({
                         message: 'Login Successful.',
+                        user: user[0],
                         token: token
                     });
                 }
@@ -200,6 +199,30 @@ exports.users_delete_user = (req, res, next) => {
                 message: 'Deleted user: ' + id,
                 result
             });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+};
+
+exports.users_verify_unique = (req, res, next) => {
+    User.find()
+        .or([{ email: req.params.param }, { username: req.params.param}])
+        .select('-__v')
+        .exec()
+        .then(user => {
+            if (user.length > 0) {
+                res.status(200).json({
+                    message: 'A user was found.'
+                });
+            } else {
+                res.status(202).json({
+                    message: 'No User Found.'
+                });
+            }
         })
         .catch(err => {
             console.log(err);

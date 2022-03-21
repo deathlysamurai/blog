@@ -1,1 +1,21 @@
-<p>header works!</p>
+<div class="bg-transparent d-flex p-3 header">
+    <div class="mr-auto">
+        <h3 class="logo" routerLink="/">Deathlysamurai</h3>
+    </div>
+    <div id="header-buttons" class="align-self-center mr-3">
+        <div *ngIf="!isLoggedIn">
+            <button class="mx-2" routerLink="/users/register">Join Now</button>
+            <button class="mx-2" routerLink="/users/login">Sign In</button>
+        </div>
+        <div *ngIf="isLoggedIn">
+            <button *ngIf="isAdmin" routerLink="/admin">Admin</button>
+            <button class="mx-2" routerLink="/users/user-page">Account</button>
+            <button class="mx-2" (click)="logout()">Sign Out</button>
+        </div>
+    </div>
+    <button #hamburger class="hamburger hamburger--spin" type="button" (click)="toggleMobileMenu()">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+</div>

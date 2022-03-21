@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PostResponse } from '../../models/postResponse.model';
+import { PostResponse } from '../../models/responses/postResponse.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 

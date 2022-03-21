@@ -93,9 +93,11 @@ exports.characters_create_character = (req, res, next) => {
         const character = new Character({
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
-            imagePath: req.file.path.replace(/\\/g, "/"),
+            imagePath: req.protocol + '://' + req.headers.host + req.file.path.replace(/\\/g, "/"),
             moves: req.body.moves,
-            health: req.body.health
+            health: req.body.health,
+            description: req.body.description,
+            speed: req.body.speed
         });
 
         return character.save();

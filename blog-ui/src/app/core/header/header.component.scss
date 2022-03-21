@@ -1,0 +1,47 @@
+@import '../../../variables.scss';
+
+.header {
+    min-height: 76px;
+}
+
+.logo:hover, .logo:focus {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.hamburger {
+    all: unset;
+    display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+    #header-buttons {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+        background-color: transparent !important;
+        &-inner, &-inner::before, &-inner::after {
+            background-color: $light-pink !important;
+        }
+        &-box {
+            cursor: pointer;
+        }
+    }
+
+    .dropdown-menu {
+        all: unset !important;
+        display: block !important;
+        background-color: rgba($content-background, .7) !important;
+        top: 76px !important;
+        right: 0 !important;
+        width: fit-content !important;
+        height: fit-content !important;
+        position: absolute !important;
+    }
+
+    button {
+        margin: 2rem;
+    }
+}

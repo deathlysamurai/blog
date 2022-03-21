@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MovesShowAllComponent } from './moves-show-all/moves-show-all.component';
 
 const routes: Routes = [
-  { path: '', component: MovesShowAllComponent }
+  { path: 'show-all', component: MovesShowAllComponent }
 ];
 
 @NgModule({

@@ -27,19 +27,22 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true
         }, 
-        // level: {
-        //     type: Number,
-        //     required: true
-        // },
-        // xp: {
-        //     type: Number,
-        //     required: true
-        // },
-        // characters: {
-        //     type: [mongoose.Schema.Types.ObjectId],
-        //     ref: 'Character',
-        //     required: false
-        // },
+        level: {
+            type: Number,
+            required: true,
+            default: 1
+        },
+        xp: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        characters: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'Character',
+            required: false,
+            default: []
+        },
         admin: {
             type: Boolean,
             default: false

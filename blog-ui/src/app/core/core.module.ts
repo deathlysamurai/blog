@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,9 @@ import { FooterComponent } from './footer/footer.component';
   exports: [
     HeaderComponent,
     FooterComponent
+  ],
+  providers: [
+    AuthService
   ]
 })
 export class CoreModule { }

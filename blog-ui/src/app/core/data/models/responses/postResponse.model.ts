@@ -1,4 +1,4 @@
-import { Post } from './post.model';
+import { Post } from '../post.model';
 
 export interface PostResponse {
     count: number;

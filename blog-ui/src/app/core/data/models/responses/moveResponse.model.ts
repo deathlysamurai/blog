@@ -1,4 +1,4 @@
-import { Move } from './move.model';
+import { Move } from '../move.model';
 
 export interface MoveResponse {
     count: number;

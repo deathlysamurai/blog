@@ -15,4 +15,6 @@ router.patch('/:userId', auth.isLoggedIn, UsersController.users_update_user);
 
 router.delete('/:userId', auth.isLoggedIn, UsersController.users_delete_user);
 
+router.get('/unique/:param', UsersController.users_verify_unique)
+
 module.exports = router;

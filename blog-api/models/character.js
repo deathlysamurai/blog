@@ -7,10 +7,10 @@ const characterSchema = new mongoose.Schema(
             type: String,
             required: true
         }, 
-        // description: {
-        //     type: String,
-        //     required: true
-        // },
+        description: {
+            type: String,
+            required: true
+        },
         imagePath: {
             type: String,
             required: true
@@ -24,10 +24,10 @@ const characterSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        // speed: {
-        //     type: Number,
-        //     required: true
-        // }
+        speed: {
+            type: Number,
+            required: true
+        }
     }
 );
 

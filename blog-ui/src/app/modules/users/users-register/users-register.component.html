@@ -1,0 +1,80 @@
+<div class="container">
+    <h1 class="text-center m-5">Create an account</h1>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="text-center content-card mx-auto p-5">
+        <div class="d-flex flex-column">
+            <p class="text-black">* required field</p>
+            <h4>Personal Information</h4>
+            <div>
+                <input formControlName="username" type="text" placeholder="*Username">
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['username'].touched && registrationForm.controls['username'].errors?.required">
+                    *Username is required.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['username'].touched && registrationForm.controls['username'].errors?.hasUniqueUsername">
+                    *Username is not available.
+                </p>
+            </div>
+            <div>
+                <input formControlName="email" type="email" placeholder="*Email">
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['email'].touched && registrationForm.controls['email'].errors?.required">
+                    *Email is required.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['email'].touched && registrationForm.controls['email'].errors?.email">
+                    *Enter a valid email address.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['email'].touched && registrationForm.controls['email'].errors?.hasUniqueEmail">
+                    *Email is not available.
+                </p>
+            </div>
+            <div>
+                <input formControlName="password" type="text" placeholder="*Password">
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors?.required">
+                    *Password is required.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors?.minlength">
+                    *At least 8 characters.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors?.hasNumber">
+                    *At least one number.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors?.hasCapitalCase">
+                    *At least one capital letter.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors?.hasLowerCase">
+                    *At least one lowercase letter.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors?.hasSpecialCharacter">
+                    *At least one special character.
+                </p>
+            </div>
+            <div>
+                <input formControlName="confirmPassword" type="text" placeholder="*Confirm Password">
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['confirmPassword'].touched && registrationForm.controls['confirmPassword'].errors?.required">
+                    * Confirm Password is required.
+                </p>
+                <p class="text-danger"
+                    *ngIf="registrationForm.controls['confirmPassword'].touched && registrationForm.controls['confirmPassword'].errors?.noPasswordMatch">
+                    *Passwords don't match.
+                </p>
+                <p>Create a password at least 8 characters long that includes at least 1 uppercase and 1 lowercase letter, 1 number and 1 special character.</p>
+            </div>
+            <div>
+                <p><u><a class="text-light" routerLink="/users/login">Have an account?</a></u></p>
+            </div>
+            <div>
+                <button type="submit" class="float-right">Create account</button>
+            </div>
+        </div>
+    </form>
+</div>

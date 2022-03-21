@@ -1,0 +1,38 @@
+<div class="container">
+    <h1 class="text-center m-5">Sign In</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="text-center content-card mx-auto p-5">
+        <div class="d-flex flex-column">
+            <p class="text-black">* required field</p>
+            <div>
+                <input formControlName="username" type="text" placeholder="*Username">
+                <p class="text-danger"
+                    *ngIf="loginForm.controls['username'].touched && loginForm.controls['username'].errors?.required">
+                    *Username is required.
+                </p>
+            </div>
+            <div>
+                <input formControlName="email" type="email" placeholder="*Email">
+                <p class="text-danger"
+                    *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.required">
+                    *Email is required.
+                </p>
+            </div>
+            <div>
+                <input formControlName="password" type="text" placeholder="*Password">
+                <p class="text-danger"
+                    *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.required">
+                    *Password is required.
+                </p>
+            </div>
+            <div>
+                <p class="text-danger"
+                    *ngIf="invalidLogin">
+                    *Login was unsuccessful.
+                </p>
+            </div>
+            <div>
+                <button type="submit" class="float-right">Sign In</button>
+            </div>
+        </div>
+    </form>
+</div>

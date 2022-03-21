@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PostsShowAllComponent } from './posts-show-all/posts-show-all.component';
 
 const routes: Routes = [
-  { path: '', component: PostsShowAllComponent }
+  { path: 'show-all', component: PostsShowAllComponent }
 ];
 
 @NgModule({

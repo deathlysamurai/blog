@@ -8,7 +8,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let character of characters">
-                <td *ngIf="character.imagePath"><img [src]="character.imagePath" [alt]="character.name"></td>
+                <td *ngIf="character.imagePath"><img src="{{apiUrl}}/{{character.imagePath}}" [alt]="character.name"></td>
                 <td>{{character.name}}</td>
             </tr>
         </tbody>

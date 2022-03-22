@@ -1,5 +1,10 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Character } from 'src/app/core/data/models/character.model';
+import { Move } from 'src/app/core/data/models/move.model';
+import { CharacterService } from 'src/app/core/data/services/character/character.service';
+import { MoveService } from 'src/app/core/data/services/move/move.service';
 
 @Component({
   selector: 'app-characters-create-character',
@@ -9,10 +14,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class CharactersCreateCharacterComponent implements OnInit {
   createCharacterForm!: FormGroup;
   imageData!: string;
+  moves!: Move[];
+  character: Character = {} as Character;
 
-  constructor() { }
+  constructor(private moveService: MoveService, private characterService: CharacterService) { }
 
   ngOnInit(): void {
+    this.moveService.getMoves()
+      .subscribe((response) => {
+        this.moves = response.moves;
+      })
+
     this.createCharacterForm = new FormGroup({
       name: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
@@ -24,6 +36,7 @@ export class CharactersCreateCharacterComponent implements OnInit {
   }
 
   onFileSelect(event: Event) {
+    this.createCharacterForm.controls['image'].markAsTouched();
     const file = (event.target as HTMLInputElement).files![0];
     if(file) {
       this.createCharacterForm.patchValue({ image: file });
@@ -37,13 +50,26 @@ export class CharactersCreateCharacterComponent implements OnInit {
       }
     } else {
       this.imageData = "";
+      this.createCharacterForm.patchValue({ image: '' });
     }
   }
 
   onSubmit() {
-    console.log(this.createCharacterForm.controls['image']);
+    this.createCharacterForm.markAllAsTouched();
+
     if(this.createCharacterForm.valid) {
-      console.log(this.imageData);
+      this.character.name = this.createCharacterForm.value.name;
+      this.character.description = this.createCharacterForm.value.description;
+      this.character.imagePath = this.createCharacterForm.value.image;
+      this.character.moves = this.createCharacterForm.value.moves;
+      this.character.health = this.createCharacterForm.value.health;
+      this.character.speed = this.createCharacterForm.value.speed;
+      
+      this.characterService.addCharacter(this.character)
+        .subscribe((response) => {
+          console.log(response);
+          // TODO: Create growler message that informs of character created
+        })
     }
   }
 

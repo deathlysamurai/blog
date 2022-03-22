@@ -31,7 +31,7 @@
                 </p>
             </div>
             <div>
-                <input formControlName="password" type="text" placeholder="*Password">
+                <input formControlName="password" type="password" placeholder="*Password">
                 <p class="text-danger"
                     *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors?.required">
                     *Password is required.
@@ -58,7 +58,7 @@
                 </p>
             </div>
             <div>
-                <input formControlName="confirmPassword" type="text" placeholder="*Confirm Password">
+                <input formControlName="confirmPassword" type="password" placeholder="*Confirm Password">
                 <p class="text-danger"
                     *ngIf="registrationForm.controls['confirmPassword'].touched && registrationForm.controls['confirmPassword'].errors?.required">
                     * Confirm Password is required.

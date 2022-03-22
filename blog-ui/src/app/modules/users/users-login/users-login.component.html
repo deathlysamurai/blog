@@ -18,7 +18,7 @@
                 </p>
             </div>
             <div>
-                <input formControlName="password" type="text" placeholder="*Password">
+                <input formControlName="password" type="password" placeholder="*Password">
                 <p class="text-danger"
                     *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.required">
                     *Password is required.

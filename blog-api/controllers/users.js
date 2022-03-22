@@ -138,10 +138,7 @@ exports.users_login_user = (req, res, next) => {
                             email: user[0].email,
                             admin: user[0].admin
                         }, 
-                        process.env.JWT_KEY, 
-                        {
-                            expiresIn: "1h"
-                        }
+                        process.env.JWT_KEY
                     );
                     return res.status(200).json({
                         message: 'Login Successful.',

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CharacterResponse } from '../../models/responses/characterResponse.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { Character } from '../../models/character.model';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,22 @@ export class CharacterService {
   }
   private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
-  // public addCharacter(character: Character) {
-  //   return this.http.post(this.baseUrl + this.API_ROUTES.addCharacter, character);
-  // }
+  loginHeaders() {
+    return new HttpHeaders().set('authorization', 'Bearer ' + this.authService.getCurrentUserToken());
+  }
+
+  public addCharacter(character: Character) {
+    const characterData = new FormData();
+    characterData.append('name', character.name);
+    characterData.append('description', character.description);
+    characterData.append('imagePath', character.imagePath);
+    characterData.append('moves', character.moves.toString());
+    characterData.append('health', character.health.toString());
+    characterData.append('speed', character.speed.toString());
+    return this.http.post(this.baseUrl + this.API_ROUTES.addCharacter, characterData, {'headers': this.loginHeaders()});
+  }
 
   // public deleteCharacter(character: Character) {
   //   return this.http.delete(this.baseUrl + this.API_ROUTES.deleteCharacter(character.id));

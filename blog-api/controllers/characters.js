@@ -68,12 +68,13 @@ exports.characters_get_one = (req, res, next) => {
 
 exports.characters_create_character = (req, res, next) => {
     Move.find().exec().then(results => {
-        if (req.body.moves.length == 0) {
+        const moves = req.body.moves.split(',');
+        if (moves.length == 0) {
             return res.status(404).json({message: "Moves may not be empty."});
         } 
 
         let movesExist = true;
-        for (const move of req.body.moves) {
+        for (const move of moves) {
             let moveExist = false;
             for (const result of results) {
                 if (result._id == move) {
@@ -93,8 +94,8 @@ exports.characters_create_character = (req, res, next) => {
         const character = new Character({
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
-            imagePath: req.protocol + '://' + req.headers.host + req.file.path.replace(/\\/g, "/"),
-            moves: req.body.moves,
+            imagePath: req.file.path.replace(/\\/g, "/"),
+            moves: moves,
             health: req.body.health,
             description: req.body.description,
             speed: req.body.speed

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CharacterService } from 'src/app/core/data/services/character/character.service';
 import { Character } from 'src/app/core/data/models/character.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-characters-show-all',
@@ -10,6 +11,7 @@ import { Character } from 'src/app/core/data/models/character.model';
 export class CharactersShowAllComponent implements OnInit {
   characters!: Character[];
   totalCharacters!: number;
+  apiUrl = environment.baseUrl;
 
   constructor(private characterService: CharacterService) { }
 

@@ -1,10 +1,10 @@
 import { Move } from './move.model';
 
 export interface Character {
-    id: string;
+    _id: string;
     name: string;
     description: string;
-    imagePath: string;
+    imagePath: File;
     moves: Move[];
     health: number;
     speed: number;

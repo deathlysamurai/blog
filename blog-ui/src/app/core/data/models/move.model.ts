@@ -1,5 +1,5 @@
 export interface Move {
-    id: string;
+    _id: string;
     name: string;
     // ability: string;
     // power: number;

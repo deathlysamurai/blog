@@ -5,7 +5,7 @@
             <p class="text-black">* required field</p>
             <div>
                 <img *ngIf="imageData" [src]="imageData" alt="Character Image" width="200">
-                <input (change)="onFileSelect($event)" type="file">
+                <input (change)="onFileSelect($event)" type="file" placeholder="*Image">
                 <p class="text-danger"
                     *ngIf="createCharacterForm.controls['image'].touched && createCharacterForm.controls['image'].errors?.required">
                     *Image is required.
@@ -16,6 +16,36 @@
                 <p class="text-danger"
                     *ngIf="createCharacterForm.controls['name'].touched && createCharacterForm.controls['name'].errors?.required">
                     *Name is required.
+                </p>
+            </div>
+            <div>
+                <textarea formControlName="description" placeholder="*Description"></textarea>
+                <p class="text-danger"
+                    *ngIf="createCharacterForm.controls['description'].touched && createCharacterForm.controls['description'].errors?.required">
+                    *Description is required.
+                </p>
+            </div>
+            <div>
+                <input formControlName="health" type="number" placeholder="*Health">
+                <p class="text-danger"
+                    *ngIf="createCharacterForm.controls['health'].touched && createCharacterForm.controls['health'].errors?.required">
+                    *Health is required.
+                </p>
+            </div>
+            <div>
+                <input formControlName="speed" type="number" placeholder="*Speed">
+                <p class="text-danger"
+                    *ngIf="createCharacterForm.controls['speed'].touched && createCharacterForm.controls['speed'].errors?.required">
+                    *Speed is required.
+                </p>
+            </div>
+            <div>
+                <select formControlName="moves" placeholder="*Moves" size="2" multiple>
+                    <option *ngFor="let move of moves" [value]="move._id">{{move.name}}</option>
+                </select>
+                <p class="text-danger"
+                    *ngIf="createCharacterForm.controls['moves'].touched && createCharacterForm.controls['moves'].errors?.required">
+                    *Moves are required.
                 </p>
             </div>
             <div>

@@ -65,7 +65,7 @@ exports.posts_create_post = (req, res, next) => {
         _id: new mongoose.Types.ObjectId,
         title: req.body.title,
         content: req.body.content,
-        imagePath: req.protocol + '://' + req.headers.host + req.file.path.replace(/\\/g, "/")
+        imagePath: req.file.path.replace(/\\/g, "/")
     });
 
     post

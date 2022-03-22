@@ -26,6 +26,8 @@ export class UsersLoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loginForm.markAllAsTouched();
+
     if(this.loginForm.valid) {
       this.user.username = this.loginForm.value.username;
       this.user.email = this.loginForm.value.email;

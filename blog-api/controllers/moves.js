@@ -64,7 +64,9 @@ exports.moves_create_move = (req, res, next) => {
     const move = new Move({
         _id: new mongoose.Types.ObjectId,
         name: req.body.name,
-        uses: req.body.uses
+        uses: req.body.uses,
+        ability: req.body.ability,
+        power: req.body.power
     });
 
     move

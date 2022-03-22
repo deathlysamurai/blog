@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MoveResponse } from '../../models/responses/moveResponse.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Move } from '../../models/move.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,15 @@ export class MoveService {
   }
   private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
-  // public addMove(move: Move) {
-  //   return this.http.post(this.baseUrl + this.API_ROUTES.addMove, move);
-  // }
+  loginHeaders() {
+    return new HttpHeaders().set('authorization', 'Bearer ' + this.authService.getCurrentUserToken());
+  }
+
+  public addMove(move: Move) {
+    return this.http.post(this.baseUrl + this.API_ROUTES.addMove, move, {'headers': this.loginHeaders()});
+  }
 
   // public deleteMove(move: Move) {
   //   return this.http.delete(this.baseUrl + this.API_ROUTES.deleteMove(move.id));

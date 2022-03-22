@@ -52,6 +52,8 @@ export class UsersRegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    this.registrationForm.markAllAsTouched();
+
     if(this.registrationForm.valid) {
       this.user.username = this.registrationForm.value.username;
       this.user.email = this.registrationForm.value.email;

@@ -1,6 +1,12 @@
-<h1>Count: {{ totalUsers }}</h1>
-<table *ngFor="let user of users">
-    <tr>
-        <td>{{ user.username }}</td>
-    </tr>
-</table>
+<div class="container">
+    <h1 class="text-center m-5">All users</h1>
+    <div class=" content-card mx-auto">
+        <ul class="list-unstyled mx-2">
+            <li class="my-4 mx-auto" *ngFor="let user of users">
+                <div class="text-center" (click)="onClick(user._id)">
+                    <h1>{{user.username}}</h1>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

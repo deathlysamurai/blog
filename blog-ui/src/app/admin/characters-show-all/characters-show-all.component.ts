@@ -28,4 +28,8 @@ export class CharactersShowAllComponent implements OnInit {
       })
   }
 
+  onClick(id: string) {
+    console.log(id);
+  }
+
 }

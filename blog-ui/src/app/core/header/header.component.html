@@ -8,7 +8,7 @@
             <button class="mx-2" routerLink="/users/login">Sign In</button>
         </div>
         <div *ngIf="isLoggedIn">
-            <button *ngIf="isAdmin" routerLink="/admin">Admin</button>
+            <button class="mx-2" *ngIf="isAdmin" routerLink="/admin">Admin</button>
             <button class="mx-2" routerLink="/users/user-page">Account</button>
             <button class="mx-2" (click)="logout()">Sign Out</button>
         </div>

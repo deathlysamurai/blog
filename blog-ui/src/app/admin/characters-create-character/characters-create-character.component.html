@@ -4,8 +4,9 @@
         <div class="d-flex flex-column">
             <p class="text-black">* required field</p>
             <div>
+                <p class="text-black mb-0">*Image</p>
                 <img *ngIf="imageData" [src]="imageData" alt="Character Image" width="200">
-                <input (change)="onFileSelect($event)" type="file" placeholder="*Image">
+                <input (change)="onFileSelect($event)" type="file">
                 <p class="text-danger"
                     *ngIf="createCharacterForm.controls['image'].touched && createCharacterForm.controls['image'].errors?.required">
                     *Image is required.
@@ -40,7 +41,8 @@
                 </p>
             </div>
             <div>
-                <select formControlName="moves" placeholder="*Moves" size="2" multiple>
+                <p class="text-black mb-0">*Moves</p>
+                <select formControlName="moves" size="2" multiple>
                     <option *ngFor="let move of moves" [value]="move._id">{{move.name}}</option>
                 </select>
                 <p class="text-danger"

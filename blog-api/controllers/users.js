@@ -8,6 +8,7 @@ exports.users_get_all = (req, res, next) => {
     User
         .find()
         .select('-__v')
+        // .populate('characters', '-__v')
         .exec()
         .then(docs => {
             const response = {
@@ -87,7 +88,9 @@ exports.users_register_user = (req, res, next) => {
                             username: req.body.username,
                             email: req.body.email,
                             password: hash,
-                            admin: req.body.admin || undefined
+                            admin: req.body.admin || undefined,
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName
                         });
             
                         user.save()

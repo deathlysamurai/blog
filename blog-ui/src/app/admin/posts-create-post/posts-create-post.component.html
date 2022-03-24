@@ -1,0 +1,36 @@
+<div class="container">
+    <h1 class="text-center m-5">Create Post</h1>
+    <form [formGroup]="createPostForm" (ngSubmit)="onSubmit()" class="text-center content-card mx-auto p-5">
+        <div class="d-flex flex-column">
+            <p class="text-black">* required field</p>
+            <div>
+                <p class="text-black mb-0">Image</p>
+                <img *ngIf="imageData" [src]="imageData" alt="Post Image" width="200">
+                <input (change)="onFileSelect($event)" type="file">
+            </div>
+            <div>
+                <input formControlName="title" type="text" placeholder="*Title">
+                <p class="text-danger"
+                    *ngIf="createPostForm.controls['title'].touched && createPostForm.controls['title'].errors?.required">
+                    *Title is required.
+                </p>
+            </div>
+            <div>
+                <textarea formControlName="content" placeholder="*Content"></textarea>
+                <p class="text-danger"
+                    *ngIf="createPostForm.controls['content'].touched && createPostForm.controls['content'].errors?.required">
+                    *Content is required.
+                </p>
+            </div>
+            <div>
+                <p class="text-black mb-0">Tags</p>
+                <select formControlName="tags" size="2" multiple>
+                    <option *ngFor="let tag of tags" [value]="tag._id">{{tag.name}}</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="float-right">Create Post</button>
+            </div>
+        </div>
+    </form>
+</div>

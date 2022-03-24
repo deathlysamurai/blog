@@ -1,0 +1,18 @@
+<div class="container">
+    <h1 class="text-center m-5">Create Tag</h1>
+    <form [formGroup]="createTagForm" (ngSubmit)="onSubmit()" class="text-center content-card mx-auto p-5">
+        <div class="d-flex flex-column">
+            <p class="text-black">* required field</p>
+            <div>
+                <input formControlName="name" type="text" placeholder="*Name">
+                <p class="text-danger"
+                    *ngIf="createTagForm.controls['name'].touched && createTagForm.controls['name'].errors?.required">
+                    *Name is required.
+                </p>
+            </div>
+            <div>
+                <button type="submit" class="float-right">Create Tag</button>
+            </div>
+        </div>
+    </form>
+</div>

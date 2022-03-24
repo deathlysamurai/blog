@@ -7,6 +7,8 @@ import { CharactersShowAllComponent } from './characters-show-all/characters-sho
 import { CharactersCreateCharacterComponent } from './characters-create-character/characters-create-character.component';
 import { MovesShowAllComponent } from './moves-show-all/moves-show-all.component';
 import { MovesCreateMoveComponent } from './moves-create-move/moves-create-move.component';
+import { PostsCreatePostComponent } from './posts-create-post/posts-create-post.component';
+import { TagsCreateTagComponent } from './tags-create-tag/tags-create-tag.component';
 
 const routes: Routes = [
     { path: '', 
@@ -32,6 +34,14 @@ const routes: Routes = [
     { path: 'moves-create-move', 
         component: MovesCreateMoveComponent,
         canActivate: [ CanActivateAdminGuard ]  
+    },
+    { path: 'posts-create-post', 
+        component: PostsCreatePostComponent,
+        canActivate: [ CanActivateAdminGuard ]  
+    },
+    { path: 'tags-create-tag', 
+        component: TagsCreateTagComponent,
+        canActivate: [ CanActivateAdminGuard ]  
     }
 ];
 
@@ -46,5 +56,7 @@ export class AdminRoutingModule {
                         CharactersShowAllComponent, 
                         CharactersCreateCharacterComponent,
                         MovesShowAllComponent,
-                        MovesCreateMoveComponent ];
+                        MovesCreateMoveComponent,
+                        PostsCreatePostComponent,
+                        TagsCreateTagComponent ];
 }

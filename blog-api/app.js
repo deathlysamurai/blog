@@ -8,6 +8,7 @@ const charactersRoutes = require('./routes/characters');
 const movesRoutes = require('./routes/moves');
 const postsRoutes = require('./routes/posts');
 const usersRoutes = require('./routes/users');
+const tagsRoutes = require('./routes/tags');
 
 const dotenv = require('dotenv');
 dotenv.config({path: './config/config.env'});
@@ -37,6 +38,7 @@ app.use('/characters', charactersRoutes);
 app.use('/moves', movesRoutes);
 app.use('/posts', postsRoutes);
 app.use('/users', usersRoutes);
+app.use('/tags', tagsRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');

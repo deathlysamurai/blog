@@ -1,18 +1,16 @@
 const mongoose = require('mongoose');
-const Post = require('../models/post');
 const Tag = require('../models/tag');
 
-exports.posts_get_all = (req, res, next) => {
+exports.tags_get_all = (req, res, next) => {
     //Use .where behind the .find to add query parameters
-    Post
+    Tag
         .find()
         .select('-__v')
-        // .populate('tags', '-__v')
         .exec()
         .then(docs => {
             const response = {
                 count: docs.length,
-                posts: docs.map(doc => {
+                tags: docs.map(doc => {
                     return {
                         ...doc['_doc'],
                         request: {
@@ -32,17 +30,17 @@ exports.posts_get_all = (req, res, next) => {
         });
 };
 
-exports.posts_get_one = (req, res, next) => {
-    const id = req.params.postId;
+exports.tags_get_one = (req, res, next) => {
+    const id = req.params.tagId;
 
-    Post.findById(id)
+    Tag.findById(id)
         .select('-__v')
         .exec()
         .then(doc => {
             console.log("From Database", doc);
             if (doc) {
                 res.status(200).json({
-                    post: doc,
+                    tag: doc,
                     request: {
                         type: 'GET',
                         url: req.protocol + '://' + req.headers.host + req.baseUrl
@@ -50,7 +48,7 @@ exports.posts_get_one = (req, res, next) => {
                 });
             } else {
                 res.status(404).json({
-                    message: 'No Post Found.'
+                    message: 'No Tag Found.'
                 });
             };
         })
@@ -62,68 +60,42 @@ exports.posts_get_one = (req, res, next) => {
         });
 };
 
-exports.posts_create_post = (req, res, next) => {
-    Tag.find().exec().then(results => {
-        const tags = req.body.tags.split(',');
-
-        let tagsExist = true;
-        for (const tag of tags) {
-            let tagExist = false;
-            for (const result of results) {
-                if (result._id == tag) {
-                    tagExist = true
-                    break;
-                }
-            }
-            if (!tagExist) {
-                tagsExist = false;
-                break;
-            }
-        }
-        if (!tagsExist) {
-            return res.status(404).json({message: "A tag was not found."});
-        } 
-
-        const post = new Post({
-            _id: new mongoose.Types.ObjectId(),
-            title: req.body.title,
-            content: req.body.content,
-            imagePath: req.file ? req.file.path.replace(/\\/g, "/") : null,
-            tags: tags
-        });
-
-        return post.save();
-    }).then(result => {
-        if (res.statusCode == 404) {
-            return res;
-        }
-
-        delete result['_doc']['__v'];
-        const response = {
-            ...result['_doc'],
-            request: {
-                type: 'GET',
-                url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + result._id 
-            }
-        };
-        res.status(201).json(response);
-    }).catch(err => {
-        console.log(err);
-        res.status(500).json({
-            error: err
-        });
+exports.tags_create_tag = (req, res, next) => {
+    const tag = new Tag({
+        _id: new mongoose.Types.ObjectId,
+        name: req.body.name
     });
+
+    tag
+        .save()
+        .then(result => {
+            delete result['_doc']['__v'];
+            const response = {
+                ...result['_doc'],
+                request: {
+                    type: 'GET',
+                    url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + result._id 
+                }
+            };
+            res.status(201).json(response);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
 };
 
-exports.posts_update_post = (req, res, next) => {
-    const id = req.params.postId;
+exports.tags_update_tag = (req, res, next) => {
+    const id = req.params.tagId;
     const updateOps = {};
 
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value;
     };
 
-    Post.updateOne({_id: id}, {$set: updateOps})
+    Tag.updateOne({_id: id}, {$set: updateOps})
         .exec()
         .then(result => {
             res.status(200).json({
@@ -141,15 +113,15 @@ exports.posts_update_post = (req, res, next) => {
         });
 };
 
-exports.posts_delete_post = (req, res, next) => {
-    const id = req.params.postId;
+exports.tags_delete_tag = (req, res, next) => {
+    const id = req.params.tagId;
 
-    Post.deleteOne({_id: id})
+    Tag.deleteOne({_id: id})
         .exec()
         .then(result => {
             console.log(result);
             res.status(200).json({
-                message: 'Deleted post: ' + id,
+                message: 'Deleted tag: ' + id,
                 result
             });
         })

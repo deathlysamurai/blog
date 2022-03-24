@@ -64,25 +64,27 @@ exports.posts_get_one = (req, res, next) => {
 
 exports.posts_create_post = (req, res, next) => {
     Tag.find().exec().then(results => {
-        const tags = req.body.tags.split(',');
+        const tags = (req.body.tags.length > 0) ? req.body.tags.split(',') : null;
 
-        let tagsExist = true;
-        for (const tag of tags) {
-            let tagExist = false;
-            for (const result of results) {
-                if (result._id == tag) {
-                    tagExist = true
+        if (tags) {
+            let tagsExist = true;
+            for (const tag of tags) {
+                let tagExist = false;
+                for (const result of results) {
+                    if (result._id == tag) {
+                        tagExist = true
+                        break;
+                    }
+                }
+                if (!tagExist) {
+                    tagsExist = false;
                     break;
                 }
             }
-            if (!tagExist) {
-                tagsExist = false;
-                break;
-            }
+            if (!tagsExist) {
+                return res.status(404).json({message: "A tag was not found."});
+            } 
         }
-        if (!tagsExist) {
-            return res.status(404).json({message: "A tag was not found."});
-        } 
 
         const post = new Post({
             _id: new mongoose.Types.ObjectId(),

@@ -31,7 +31,7 @@ export class PostService {
     postData.append('title', post.title);
     postData.append('content', post.content);
     postData.append('imagePath', post.imagePath!);
-    postData.append('tags', post.tags!.toString());
+    postData.append('tags', post.tags! ? post.tags.toString() : "");
 
     return this.http.post(this.baseUrl + this.API_ROUTES.addPost, postData, {'headers': this.loginHeaders()});
   }

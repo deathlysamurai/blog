@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GameScreenComponent } from './game-screen/game-screen.component';
+import { WelcomeScreenComponent } from './welcome-screen/welcome-screen.component';
 
 const routes: Routes = [
-  { path: '', component: GameScreenComponent }
+  { path: '', component: WelcomeScreenComponent },
+  { path: 'game-screen', component: GameScreenComponent }
 ];
 
 @NgModule({
@@ -11,5 +13,5 @@ const routes: Routes = [
   exports: [ RouterModule ]
 })
 export class GameRoutingModule { 
-  static components = [ GameScreenComponent ];
+  static components = [ WelcomeScreenComponent, GameScreenComponent ];
 }

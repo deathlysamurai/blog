@@ -1,0 +1,9 @@
+.game {
+    width: fit-content;
+    padding: 10px;
+    &:hover {
+        cursor: pointer;
+        background-color: rgba(white, .2);
+        border-radius: 20px;
+    }
+}

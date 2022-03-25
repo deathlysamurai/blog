@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameRoutingModule } from './game-routing.module';
-import { GameScreenComponent } from './game-screen/game-screen.component';
+import { WelcomeScreenComponent } from './welcome-screen/welcome-screen.component';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,7 @@ import { GameScreenComponent } from './game-screen/game-screen.component';
     GameRoutingModule
   ],
   exports: [
-    GameScreenComponent
+    WelcomeScreenComponent
   ]
 })
 export class GameModule { }

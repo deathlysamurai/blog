@@ -2,7 +2,7 @@
     <h1 class="text-center m-5">Create Move</h1>
     <form [formGroup]="createMoveForm" (ngSubmit)="onSubmit()" class="text-center content-card mx-auto p-5">
         <div class="d-flex flex-column">
-            <p class="text-black">* required field</p>
+            <p>* required field</p>
             <div>
                 <input formControlName="name" type="text" placeholder="*Name">
                 <p class="text-danger"

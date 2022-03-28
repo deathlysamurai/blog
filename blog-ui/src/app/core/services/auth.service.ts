@@ -24,6 +24,14 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('admin')!);
   }
 
+  updateCurrentUser(currentUser: any, updatedValues: any) {
+    Object.keys(updatedValues).forEach(element => {
+      currentUser[element] = updatedValues[element];
+    });
+
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
   login(token: string, currentUser: User, admin: boolean) {
     localStorage.setItem('currentUserToken', JSON.stringify(token));
     localStorage.setItem('currentUser', JSON.stringify(currentUser));

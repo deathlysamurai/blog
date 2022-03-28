@@ -20,6 +20,17 @@ body {
     background: rgba($content-background, .7);
     border-radius: 20px;
     box-shadow: 0 2px 4px 4px  rgb(0 0 0 / 14%), 0 4px 5px 5px rgb(0 0 0 / 12%), 0 1px 10px 10px rgb(0 0 0 / 20%);
+    form {
+        p, h4 {
+            color: black;
+            font-weight: 1000;
+            text-align: left;
+        }
+    }
+}
+
+form {
+    max-width: 500px;
     input, textarea, select {
         background-color: rgba($input-background, .7);
         border: 1px solid $input-background;
@@ -32,15 +43,6 @@ body {
         &::placeholder {
             color: black;
         }
-    }
-}
-
-form {
-    max-width: 500px;
-    p, h4 {
-        color: black;
-        font-weight: 1000;
-        text-align: left;
     }
 }
 
@@ -80,6 +82,7 @@ ul {
     li:hover {
         cursor: pointer;
         background-color: rgba(white, .4);
+        border-radius: 20px;
     }
 }
 

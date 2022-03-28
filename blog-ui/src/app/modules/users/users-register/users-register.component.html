@@ -2,8 +2,14 @@
     <h1 class="text-center m-5">Create an account</h1>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="text-center content-card mx-auto p-5">
         <div class="d-flex flex-column">
-            <p class="text-black">* required field</p>
+            <p>* required field</p>
             <h4>Personal Information</h4>
+            <div>
+                <input formControlName="firstName" type="text" placeholder="First Name">
+            </div>
+            <div>
+                <input formControlName="lastName" type="text" placeholder="Last Name">
+            </div>
             <div>
                 <input formControlName="username" type="text" placeholder="*Username">
                 <p class="text-danger"

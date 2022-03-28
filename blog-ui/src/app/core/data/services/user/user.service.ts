@@ -4,9 +4,11 @@ import { UsersResponse } from '../../models/responses/user/usersResponse.model';
 import { UserResponse } from '../../models/responses/user/userResponse.model';
 import { LoginResponse } from '../../models/responses/loginResponse.model';
 import { User } from '../../models/user.model';
+import { UpdateModel } from '../../models/updateModel.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Injectable({
   providedIn: 'root'
@@ -46,9 +48,17 @@ export class UserService {
     return this.http.get<UsersResponse>(this.baseUrl + this.API_ROUTES.getUsers, {'headers': this.loginHeaders()});
   }
 
-  // public updateUser(user: User) {
-  //   return this.http.put(this.baseUrl + this.API_ROUTES.updateUser(user.id), user);
-  // }
+  public updateUser(userId: string, updatedUser: any) {
+    let updateValues: UpdateModel[] = [] as UpdateModel[];
+    Object.keys(updatedUser).forEach(element => {
+      let updateValue: UpdateModel = {} as UpdateModel;
+      updateValue.propName = element;
+      updateValue.value = updatedUser[element];
+      updateValues.push(updateValue);
+    });
+
+    return this.http.patch(this.baseUrl + this.API_ROUTES.updateUser(userId), updateValues, {'headers': this.loginHeaders()});
+  }
 
   public loginUser(user: User) {
     return this.http.post<LoginResponse>(this.baseUrl + this.API_ROUTES.loginUser, user, { observe: 'response' });

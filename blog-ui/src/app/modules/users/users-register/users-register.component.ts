@@ -18,6 +18,8 @@ export class UsersRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
+      firstName: [''],
+      lastName: [''],
       username: [
         '', 
         {
@@ -55,6 +57,8 @@ export class UsersRegisterComponent implements OnInit {
     this.registrationForm.markAllAsTouched();
 
     if(this.registrationForm.valid) {
+      this.user.firstName = this.registrationForm.value.firstName;
+      this.user.lastName = this.registrationForm.value.lastName;
       this.user.username = this.registrationForm.value.username;
       this.user.email = this.registrationForm.value.email;
       this.user.password = this.registrationForm.value.password;

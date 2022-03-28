@@ -2,7 +2,7 @@
     <h1 class="text-center m-5">Sign In</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="text-center content-card mx-auto p-5">
         <div class="d-flex flex-column">
-            <p class="text-black">* required field</p>
+            <p>* required field</p>
             <div>
                 <input formControlName="username" type="text" placeholder="*Username">
                 <p class="text-danger"

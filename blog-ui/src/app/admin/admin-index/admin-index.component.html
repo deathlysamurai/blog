@@ -1,7 +1,27 @@
-<button routerLink="/admin/characters-create-character">Create Character</button>
-<button routerLink="/admin/moves-create-move">Create Move</button>
-<button routerLink="/admin/posts-create-post">Create Post</button>
-<button routerLink="/admin/tags-create-tag">Create Tag</button>
-<button routerLink="/admin/users-show-all">Show All Users</button>
-<button routerLink="/admin/characters-show-all">Show All Characters</button>
-<button routerLink="/admin/moves-show-all">Show All Moves</button>
+<div class="container">
+    <h1 class="text-center m-5">Create Character</h1>
+    <div class="content-card p-5 mx-auto">
+        <div>
+            <h3 class="d-inline-block mr-4">Characters:</h3>
+            <button routerLink="/admin/characters/characters-show-all">Show All Characters</button> |
+            <button routerLink="/admin/characters/characters-create-character">Create Character</button>
+        </div>
+        <div>
+            <h3 class="d-inline-block mr-4">Moves:</h3>
+            <button routerLink="/admin/moves/moves-show-all">Show All Moves</button> |
+            <button routerLink="/admin/moves/moves-create-move">Create Move</button>
+        </div>
+        <div>
+            <h3 class="d-inline-block mr-4">Posts:</h3>
+            <button routerLink="/admin/posts/posts-create-post">Create Post</button>
+        </div>
+        <div>
+            <h3 class="d-inline-block mr-4">Tags:</h3>
+            <button routerLink="/admin/tags/tags-create-tag">Create Tag</button>
+        </div>
+        <div>
+            <h3 class="d-inline-block mr-4">Users:</h3>
+            <button routerLink="/admin/users/users-show-all">Show All Users</button>
+        </div>
+    </div>
+</div>

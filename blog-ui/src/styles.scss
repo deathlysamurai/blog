@@ -20,12 +20,10 @@ body {
     background: rgba($content-background, .7);
     border-radius: 20px;
     box-shadow: 0 2px 4px 4px  rgb(0 0 0 / 14%), 0 4px 5px 5px rgb(0 0 0 / 12%), 0 1px 10px 10px rgb(0 0 0 / 20%);
-    form {
-        p, h4 {
-            color: black;
-            font-weight: 1000;
-            text-align: left;
-        }
+    p, h4 {
+        color: black;
+        font-weight: 1000;
+        text-align: left;
     }
 }
 

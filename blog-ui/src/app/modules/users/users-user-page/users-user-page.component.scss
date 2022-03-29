@@ -1,23 +1,4 @@
-.content-page {
-    display: flex;
-    align-items: stretch;
-    .content-title {
-        width: 40vw;
-        text-align: center;
-        h1 {
-            position: relative;
-            top: 20%;
-        }
-    }
-    .content {
-        width: 60vw;
-        border-left: 1px solid white;
-        form {
-            p, h4 {
-                color: white;
-                font-weight: 1000;
-                text-align: left;
-            }
-        }
-    }
+.active {
+    background-color: rgba(white, .4);
+    border-radius: 20px;
 }

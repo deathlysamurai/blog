@@ -162,30 +162,33 @@ exports.users_login_user = (req, res, next) => {
         });
 };
 
-exports.users_update_user = (req, res, next) => {
+exports.users_update_user = async (req, res, next) => {
     const id = req.params.userId;
     const updateOps = {};
 
-    for (const ops of req.body) {
-        updateOps[ops.propName] = ops.value;
-    };
+    try {
+        for (const ops of req.body) {
+            if (ops.propName == 'password') {
+                ops.value = await bcrypt.hash(ops.value, 10);
+            }
 
-    User.updateOne({_id: id}, {$set: updateOps})
-        .exec()
-        .then(result => {
-            res.status(200).json({
-                request: {
-                    type: 'GET',
-                    url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + id
-                }
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
+            updateOps[ops.propName] = ops.value;
+        };
+
+        await User.updateOne({_id: id}, {$set: updateOps});
+ 
+        res.status(200).json({
+            request: {
+                type: 'GET',
+                url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + id
+            }
         });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    }
 };
 
 exports.users_delete_user = (req, res, next) => {

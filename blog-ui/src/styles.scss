@@ -27,6 +27,31 @@ body {
     }
 }
 
+.content-page {
+    display: flex;
+    align-items: stretch;
+    .content-page-list {
+        width: 256px;
+        h1 {
+            font-size: 1.5em;
+        }
+        h1:hover {
+            cursor: pointer;
+            background-color: rgba(white, .4);
+            border-radius: 20px;
+        }
+    }
+    .content {
+        border-left: 1px solid white;
+        flex-grow: 1;
+    }
+    p, h4 {
+        color: white;
+        font-weight: 1000;
+        text-align: left;
+    }
+}
+
 form {
     max-width: 500px;
     input, textarea, select {

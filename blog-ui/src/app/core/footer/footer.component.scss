@@ -1,0 +1,21 @@
+.footer {
+    border-top: 1px solid white;
+    width: 95vw;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+}
+
+.link:hover {
+    background-color: rgba(white, .4);
+    border-radius: 20px;
+}
+
+button {
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    font-size: 1.5em;
+}

@@ -1,3 +1,22 @@
-<div class="footer mx-auto mt-5 text-center">
-    <p>footer works!</p>
+<div class="footer mx-auto mt-5 pt-4">
+    <ul class="list-unstyled d-flex">
+        <li class="mr-2"><a href="https://www.facebook.com/mathew.humphrey.programming/" target="_blank"><button><fa-icon [icon]="faFacebookF"></fa-icon></button></a></li>
+        <li class="mx-2"><a href="https://www.instagram.com/deathlysamurai/" target="_blank"><button><fa-icon [icon]="faInstagram"></fa-icon></button></a></li>
+        <li class="mx-2"><a href="https://www.linkedin.com/in/mathew-humphrey/" target="_blank"><button><fa-icon [icon]="faLinkedinIn"></fa-icon></button></a></li>
+        <li class="mx-2"><a href="https://github.com/deathlysamurai/" target="_blank"><button><fa-icon [icon]="faGithub"></fa-icon></button></a></li>
+    </ul>
+    <ul class="list-unstyled d-flex">
+        <li>
+            <a class="link px-2 mr-2" routerLink="/">home</a>
+        </li>
+        <li>
+            <span>|</span>
+            <a class="link px-2 mx-2" routerLink="/posts/show-all">blog</a>
+        </li>
+        <li>
+            <span>|</span>
+            <a class="link px-2 mx-2" routerLink="/game-screen">game</a>
+        </li>
+    </ul>
+    <p>&copy; 2022 Mathew Humphrey</p>
 </div>

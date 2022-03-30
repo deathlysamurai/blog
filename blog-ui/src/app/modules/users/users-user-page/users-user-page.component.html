@@ -4,10 +4,10 @@
 </div>
 <div class="content-page">
     <div class="content-page-list">
-        <h1 class="account m-3 pl-2 active" (click)="newPage('account')">Personal Info</h1>
-        <h1 class="password m-3 pl-2" (click)="newPage('password')">Change Password</h1>
+        <h1 class="account m-3 p-2 active" (click)="newPage('account')">Personal Info</h1>
+        <h1 class="password m-3 p-2" (click)="newPage('password')">Change Password</h1>
     </div>
-    <div class="content">
+    <div class="content pb-5">
         <app-account *ngIf="currentPage === 'account'"></app-account>
         <app-password *ngIf="currentPage === 'password'" (currentPageEvent)="newPage($event)"></app-password>
     </div>

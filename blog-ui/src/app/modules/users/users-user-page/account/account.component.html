@@ -1,85 +1,47 @@
-<form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()" class="text-center mx-auto p-5">
-    <div class="d-flex flex-column">
-        <p>* required field</p>
-        <div>
-            <p>First Name</p>
-            <input formControlName="firstName" type="text">
+<div class="container">
+    <h1 class="text-center m-5">Personal Info</h1>
+    <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()" class="text-center content-card mx-auto p-5">
+        <div class="d-flex flex-column">
+            <p>* required field</p>
+            <div>
+                <p>First Name</p>
+                <input formControlName="firstName" type="text">
+            </div>
+            <div>
+                <p>Last Name</p>
+                <input formControlName="lastName" type="text">
+            </div>
+            <div>
+                <p>*Username</p>
+                <input formControlName="username" type="text">
+                <p class="text-danger"
+                    *ngIf="updateUserForm.controls['username'].touched && updateUserForm.controls['username'].errors?.required">
+                    *Username is required.
+                </p>
+                <p class="text-danger"
+                    *ngIf="updateUserForm.controls['username'].touched && updateUserForm.controls['username'].errors?.hasUniqueUsername">
+                    *Username is not available.
+                </p>
+            </div>
+            <div>
+                <p>*Email</p>
+                <input formControlName="email" type="email">
+                <p class="text-danger"
+                    *ngIf="updateUserForm.controls['email'].touched && updateUserForm.controls['email'].errors?.required">
+                    *Email is required.
+                </p>
+                <p class="text-danger"
+                    *ngIf="updateUserForm.controls['email'].touched && updateUserForm.controls['email'].errors?.email">
+                    *Enter a valid email address.
+                </p>
+                <p class="text-danger"
+                    *ngIf="updateUserForm.controls['email'].touched && updateUserForm.controls['email'].errors?.hasUniqueEmail">
+                    *Email is not available.
+                </p>
+            </div>
+            <div>
+                <button type="submit" class="float-right">Update account</button>
+            </div> 
         </div>
-        <div>
-            <p>Last Name</p>
-            <input formControlName="lastName" type="text">
-        </div>
-        <div>
-            <p>*Username</p>
-            <input formControlName="username" type="text">
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['username'].touched && updateUserForm.controls['username'].errors?.required">
-                *Username is required.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['username'].touched && updateUserForm.controls['username'].errors?.hasUniqueUsername">
-                *Username is not available.
-            </p>
-        </div>
-        <div>
-            <p>*Email</p>
-            <input formControlName="email" type="email">
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['email'].touched && updateUserForm.controls['email'].errors?.required">
-                *Email is required.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['email'].touched && updateUserForm.controls['email'].errors?.email">
-                *Enter a valid email address.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['email'].touched && updateUserForm.controls['email'].errors?.hasUniqueEmail">
-                *Email is not available.
-            </p>
-        </div>
-        <!-- <div>
-            <p>*Password</p>
-            <input formControlName="password" type="password">
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['password'].touched && updateUserForm.controls['password'].errors?.required">
-                *Password is required.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['password'].touched && updateUserForm.controls['password'].errors?.minlength">
-                *At least 8 characters.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['password'].touched && updateUserForm.controls['password'].errors?.hasNumber">
-                *At least one number.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['password'].touched && updateUserForm.controls['password'].errors?.hasCapitalCase">
-                *At least one capital letter.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['password'].touched && updateUserForm.controls['password'].errors?.hasLowerCase">
-                *At least one lowercase letter.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['password'].touched && updateUserForm.controls['password'].errors?.hasSpecialCharacter">
-                *At least one special character.
-            </p>
-        </div>
-        <div>
-            <p>*Confirm Password</p>
-            <input formControlName="confirmPassword" type="password">
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['confirmPassword'].touched && updateUserForm.controls['confirmPassword'].errors?.required">
-                * Confirm Password is required.
-            </p>
-            <p class="text-danger"
-                *ngIf="updateUserForm.controls['confirmPassword'].touched && updateUserForm.controls['confirmPassword'].errors?.noPasswordMatch">
-                *Passwords don't match.
-            </p>
-            <p>Create a password at least 8 characters long that includes at least 1 uppercase and 1 lowercase letter, 1 number and 1 special character.</p>
-        </div>-->
-        <div>
-            <button type="submit" class="float-right">Update account</button>
-        </div> 
-    </div>
-</form>
+    </form>
+</div>

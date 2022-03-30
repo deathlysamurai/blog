@@ -25,6 +25,18 @@ body {
         font-weight: 1000;
         text-align: left;
     }
+    ul {
+        height: 75vh;
+        overflow-y: auto;
+        li {
+            width: 50%;
+        }
+        li:hover {
+            cursor: pointer;
+            background-color: rgba(white, .4);
+            border-radius: 20px;
+        }
+    }
 }
 
 .content-page {
@@ -42,7 +54,6 @@ body {
         }
     }
     .content {
-        border-left: 1px solid white;
         flex-grow: 1;
     }
     p, h4 {
@@ -96,19 +107,6 @@ button {
     }
 }
 
-ul {
-    height: 75vh;
-    overflow-y: auto;
-    li {
-        width: 50%;
-    }
-    li:hover {
-        cursor: pointer;
-        background-color: rgba(white, .4);
-        border-radius: 20px;
-    }
-}
-
 .text-danger {
     margin-top: -2rem;
     margin-bottom: 2rem;
@@ -130,4 +128,13 @@ ul {
 img {
     max-width: 100%;
     height: auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .content-page {
+        flex-direction: column;
+        .content-page-list {
+            width: 100%;
+        }
+    }
 }

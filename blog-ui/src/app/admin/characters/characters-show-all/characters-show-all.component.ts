@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CharacterService } from 'src/app/core/data/services/character/character.service';
 import { Character } from 'src/app/core/data/models/character.model';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-characters-show-all',
@@ -13,7 +14,7 @@ export class CharactersShowAllComponent implements OnInit {
   totalCharacters!: number;
   apiUrl = environment.baseUrl;
 
-  constructor(private characterService: CharacterService) { }
+  constructor(private characterService: CharacterService, private router: Router) { }
 
   ngOnInit(): void {
     this.getCharacters();
@@ -29,7 +30,7 @@ export class CharactersShowAllComponent implements OnInit {
   }
 
   onClick(id: string) {
-    console.log(id);
+    this.router.navigate(['/admin/characters/characters-character-page', id]);
   }
 
 }

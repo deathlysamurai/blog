@@ -68,4 +68,14 @@ export class ValidationService {
       ));
     }
   }
+
+  newValueValidator(startingValue: string): ValidationErrors | null {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if(!control.value) {
+        null;
+      }
+
+      return control.value == startingValue ? { hasNewValue: true } : null;
+    }
+  }
 }

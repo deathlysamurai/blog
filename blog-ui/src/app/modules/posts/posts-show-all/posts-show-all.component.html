@@ -1,6 +1,7 @@
 <h1>Count: {{ totalPosts }}</h1>
 <table *ngFor="let post of posts">
     <tr>
-        <td>{{ post.title }}</td>
+        <td [innerHTML]="post.title"></td>
+        <td [innerHTML]="post.content"></td>
     </tr>
 </table>

@@ -12,19 +12,7 @@ const routes: Routes = [
   { path: 'login', component: UsersLoginComponent },
   { path: 'user-page', 
     component: UsersUserPageComponent,
-    canActivate: [ CanActivateGuard ],
-    // children: [
-    //   {
-    //     path: '',
-    //     component: AccountComponent,
-    //     outlet: 'user-page'
-    //   },
-    //   {
-    //     path: 'password',
-    //     component: PasswordComponent,
-    //     outlet: 'user-page'
-    //   }
-    // ]
+    canActivate: [ CanActivateGuard ]
   }
 ];
 

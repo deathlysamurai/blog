@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CanActivateAdminGuard } from 'src/app/shared/guards/can-activate-admin.guard';
+import { CharactersCharacterPageComponent } from './characters-character-page/characters-character-page.component';
 import { CharactersCreateCharacterComponent } from './characters-create-character/characters-create-character.component';
 import { CharactersShowAllComponent } from './characters-show-all/characters-show-all.component';
+import { CharacterComponent } from './characters-character-page/character/character.component';
 
 const routes: Routes = [
   { path: 'characters-show-all', 
@@ -13,6 +15,10 @@ const routes: Routes = [
         component: CharactersCreateCharacterComponent,
         canActivate: [ CanActivateAdminGuard ]  
     },
+    { path: 'characters-character-page/:id', 
+        component: CharactersCharacterPageComponent,
+        canActivate: [ CanActivateAdminGuard ]  
+    },
 ];
 
 @NgModule({
@@ -21,5 +27,8 @@ const routes: Routes = [
   providers: [ CanActivateAdminGuard ]
 })
 export class CharactersRoutingModule { 
-  static components = [ CharactersShowAllComponent, CharactersCreateCharacterComponent ];
+  static components = [ CharactersShowAllComponent, 
+                        CharactersCreateCharacterComponent, 
+                        CharactersCharacterPageComponent,
+                        CharacterComponent ];
 }

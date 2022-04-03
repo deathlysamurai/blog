@@ -44,6 +44,10 @@ body {
     align-items: stretch;
     .content-page-list {
         width: 256px;
+        .active {
+            background-color: rgba(white, .4);
+            border-radius: 20px;
+        }
         h1 {
             font-size: 1.5em;
         }

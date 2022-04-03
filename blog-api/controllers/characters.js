@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Character = require('../models/character');
 const Move = require('../models/move');
+const fs = require('fs');
 
 exports.characters_get_all = (req, res, next) => {
     //Use .where behind the .find to add query parameters
@@ -128,9 +129,23 @@ exports.characters_update_character = (req, res, next) => {
     const id = req.params.characterId;
     const updateOps = {};
 
-    for (const ops of req.body) {
-        updateOps[ops.propName] = ops.value;
+    if (req.body.PROPS) {
+        const props = JSON.parse(req.body.PROPS);
+        for (const ops of props) {
+            updateOps[ops.propName] = ops.value;
+        };
+    }
+    
+    if (req.file) {
+        updateOps['imagePath'] = req.file.path.replace(/\\/g, "/");
     };
+    if(req.body.previousImagePath) {
+        fs.unlink(req.body.previousImagePath, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        })
+    }
 
     Character.updateOne({_id: id}, {$set: updateOps})
         .exec()

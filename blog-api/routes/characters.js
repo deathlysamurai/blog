@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
         cb(null, './images/characters');
     },
     filename: function(req, file, cb) {
-        cb(null, file.originalname);
+        cb(null, Date.now() + file.originalname);
     }
 });
 const fileFilter = (req, file, cb) => {
@@ -33,7 +33,7 @@ router.get('/:characterId', CharactersController.characters_get_one);
 
 router.post('/', auth.isLoggedIn, auth.isAdmin, upload.single('imagePath'), CharactersController.characters_create_character);
 
-router.patch('/:characterId', auth.isLoggedIn, auth.isAdmin, CharactersController.characters_update_character);
+router.patch('/:characterId', auth.isLoggedIn, auth.isAdmin, upload.single('imagePath'), CharactersController.characters_update_character);
 
 router.delete('/:characterId', auth.isLoggedIn, auth.isAdmin, CharactersController.characters_delete_character);
 

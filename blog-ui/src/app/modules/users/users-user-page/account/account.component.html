@@ -41,6 +41,10 @@
             </div>
             <div>
                 <button type="submit" class="float-right">Update account</button>
+                <p class="text-danger"
+                    *ngIf="updateUserForm.errors?.noNewValues">
+                    *Must change at least 1 value.
+                </p>
             </div> 
         </div>
     </form>

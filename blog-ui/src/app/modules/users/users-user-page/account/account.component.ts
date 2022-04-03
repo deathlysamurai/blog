@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/core/data/models/user.model';
+import { User, UserClass } from 'src/app/core/data/models/user.model';
 import { UserService } from 'src/app/core/data/services/user/user.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ValidationService } from 'src/app/shared/validation/validation.service';
@@ -13,7 +13,7 @@ import { ValidationService } from 'src/app/shared/validation/validation.service'
 export class AccountComponent implements OnInit {
   user: User = {} as User;
   updateUserForm: FormGroup = {} as FormGroup;
-  updatedUser: User = {} as User;
+  updatedUser: any = {} as any;
 
   constructor(private fb: FormBuilder,
               private validationService: ValidationService,
@@ -42,42 +42,36 @@ export class AccountComponent implements OnInit {
           updateOn: 'blur'
         }
       ],
-      // password: [
-      //   '', 
-      //   [
-      //     Validators.required,
-      //     Validators.minLength(8),
-      //     this.validationService.patternValidator(/\d/, { hasNumber: true }),
-      //     this.validationService.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
-      //     this.validationService.patternValidator(/[a-z]/, { hasLowerCase: true }),
-      //     this.validationService.patternValidator(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/, { hasSpecialCharacter: true })
-      //   ],
-      // ],
-      // confirmPassword: ['', Validators.required],
     },
-      // { validator: this.validationService.passwordMatchValidator },
     );
   }
 
   onSubmit() {
     this.updateUserForm.markAllAsTouched();
 
-    if(this.updateUserForm.valid) {
-      if(this.updateUserForm.value.username != this.user.username) {
-        this.updatedUser.username = this.updateUserForm.value.username;
+    if(this.updateUserForm.valid) {      
+      UserClass.PROP_NAMES.forEach(element => {
+        for(let control in this.updateUserForm.controls) {
+          if(control == element) {
+            let user: any = this.user;
+            if(user[element] != this.updateUserForm.value[control]) {
+              this.updatedUser[element] = this.updateUserForm.value[control];
+            }
+          }
+        }
+      });
+      
+      if(Object.entries(this.updatedUser).length > 0) {
+        this.userService.updateUser(this.user._id, this.updatedUser)
+          .subscribe((response) => {
+            console.log(response);
+            this.authService.updateCurrentUser(this.user, this.updatedUser);
+            //TODO: Add growler message saying user was updated
+            this.updatedUser = {};
+          });
+      } else {
+        this.updateUserForm.setErrors({noNewValues: true});
       }
-      if(this.updateUserForm.value.email != this.user.email) {
-        this.updatedUser.email = this.updateUserForm.value.email;
-      }
-      this.updatedUser.firstName = this.updateUserForm.value.firstName;
-      this.updatedUser.lastName = this.updateUserForm.value.lastName;
-
-      this.userService.updateUser(this.user._id, this.updatedUser)
-        .subscribe((response) => {
-          console.log(response);
-          this.authService.updateCurrentUser(this.user, this.updatedUser);
-          //TODO: Add growler message saying user was updated
-        });
     }
   }
 

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Character = require('../models/character');
 const Move = require('../models/move');
 const fs = require('fs');
+const sharp = require('sharp');
 
 exports.characters_get_all = (req, res, next) => {
     //Use .where behind the .find to add query parameters
@@ -67,65 +68,50 @@ exports.characters_get_one = (req, res, next) => {
         });
 };
 
-exports.characters_create_character = (req, res, next) => {
-    Move.find().exec().then(results => {
-        const moves = req.body.moves.split(',');
-        if (moves.length == 0) {
+exports.characters_create_character = async (req, res, next) => {
+    try {
+        const allMoves = await Move.find();
+        const characterMoves = req.body.moves.split(',');
+
+        if (characterMoves.length == 0) {
             return res.status(404).json({message: "Moves may not be empty."});
         } 
 
-        let movesExist = true;
-        for (const move of moves) {
-            let moveExist = false;
-            for (const result of results) {
-                if (result._id == move) {
-                    moveExist = true
-                    break;
-                }
-            }
-            if (!moveExist) {
-                movesExist = false;
-                break;
-            }
-        }
-        if (!movesExist) {
+        if (!checkMovesExist(characterMoves, allMoves)) {
             return res.status(404).json({message: "A move was not found."});
         } 
 
         const character = new Character({
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
-            imagePath: req.file.path.replace(/\\/g, "/"),
-            moves: moves,
+            imagePath: `${req.file.path.replace(/\\/g, "/")}.webp`,
+            moves: characterMoves,
             health: req.body.health,
             description: req.body.description,
             speed: req.body.speed
         });
 
-        return character.save();
-    }).then(result => {
-        if (res.statusCode == 404) {
-            return res;
-        }
+        await processCharacterImage(req.file.path.replace(/\\/g, "/"));
 
-        delete result['_doc']['__v'];
+        let newCharacter = await character.save();
+        delete newCharacter['_doc']['__v'];
         const response = {
-            ...result['_doc'],
+            ...newCharacter['_doc'],
             request: {
                 type: 'GET',
-                url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + result._id 
+                url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + newCharacter._id 
             }
         };
         res.status(201).json(response);
-    }).catch(err => {
+    } catch (err) {
         console.log(err);
         res.status(500).json({
             error: err
         });
-    });
+    }
 };
 
-exports.characters_update_character = (req, res, next) => {
+exports.characters_update_character = async (req, res, next) => {
     const id = req.params.characterId;
     const updateOps = {};
 
@@ -135,34 +121,30 @@ exports.characters_update_character = (req, res, next) => {
             updateOps[ops.propName] = ops.value;
         };
     }
-    
-    if (req.file) {
-        updateOps['imagePath'] = req.file.path.replace(/\\/g, "/");
-    };
-    if(req.body.previousImagePath) {
-        fs.unlink(req.body.previousImagePath, (err) => {
-            if (err) {
-                console.log(err);
-            }
-        })
-    }
 
-    Character.updateOne({_id: id}, {$set: updateOps})
-        .exec()
-        .then(result => {
-            res.status(200).json({
-                request: {
-                    type: 'GET',
-                    url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + id
-                }
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
+    try {
+        if (req.file) {
+            updateOps['imagePath'] = `${req.file.path.replace(/\\/g, "/")}.webp`;
+            await processCharacterImage(req.file.path.replace(/\\/g, "/"));
+        };
+        if(req.body.previousImagePath) {
+            fs.unlink(req.body.previousImagePath, (err) => { if (err) throw err })
+        }
+    
+        await Character.updateOne({_id: id}, {$set: updateOps})
+        res.status(200).json({
+            request: {
+                type: 'GET',
+                url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + id
+            }
         });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    }
+    
 };
 
 exports.characters_delete_character = (req, res, next) => {
@@ -184,3 +166,30 @@ exports.characters_delete_character = (req, res, next) => {
             });
         });
 };
+
+function checkMovesExist(characterMoves, allMoves) {
+    let movesExist = true;
+    for (const characterMove of characterMoves) {
+        let moveExist = false;
+        for (const move of allMoves) {
+            if (move._id == characterMove) {
+                moveExist = true
+                break;
+            }
+        }
+        if (!moveExist) {
+            movesExist = false;
+            break;
+        }
+    }
+    return movesExist;
+}
+
+async function processCharacterImage(image) {
+    try {
+        await sharp(image).webp({ quality: 50 }).toFile(`${image}.webp`);
+        fs.unlink(image, (err) => { if (err) throw err });
+    } catch (err) {
+        throw(err);
+    }
+}

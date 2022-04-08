@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class WelcomeScreenComponent implements OnInit {
   apiUrl = environment.baseUrl;
-  welcomeImage: String = "images/welcome-image.png";
+  welcomeImage: String = "images/greetings-matt.png";
 
   constructor() { }
 

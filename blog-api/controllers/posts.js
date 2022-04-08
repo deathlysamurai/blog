@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Post = require('../models/post');
 const Tag = require('../models/tag');
+const fs = require('fs');
+const sharp = require('sharp');
 
 exports.posts_get_all = (req, res, next) => {
     //Use .where behind the .find to add query parameters
@@ -62,26 +64,13 @@ exports.posts_get_one = (req, res, next) => {
         });
 };
 
-exports.posts_create_post = (req, res, next) => {
-    Tag.find().exec().then(results => {
-        const tags = (req.body.tags.length > 0) ? req.body.tags.split(',') : null;
+exports.posts_create_post = async (req, res, next) => {
+    try {
+        const allTags = await Tag.find();
+        const postTags = (req.body.tags.length > 0) ? req.body.tags.split(',') : null;
 
-        if (tags) {
-            let tagsExist = true;
-            for (const tag of tags) {
-                let tagExist = false;
-                for (const result of results) {
-                    if (result._id == tag) {
-                        tagExist = true
-                        break;
-                    }
-                }
-                if (!tagExist) {
-                    tagsExist = false;
-                    break;
-                }
-            }
-            if (!tagsExist) {
+        if (postTags) {
+            if (!checkTagsExist(postTags, allTags)) {
                 return res.status(404).json({message: "A tag was not found."});
             } 
         }
@@ -91,33 +80,32 @@ exports.posts_create_post = (req, res, next) => {
             title: req.body.title,
             content: req.body.content,
             imagePath: req.file ? req.file.path.replace(/\\/g, "/") : null,
-            tags: tags
+            tags: postTags
         });
 
-        return post.save();
-    }).then(result => {
-        if (res.statusCode == 404) {
-            return res;
+        if (req.file) {
+            await processPostImage(req.file.path.replace(/\\/g, "/"));
         }
 
-        delete result['_doc']['__v'];
+        let newPost = await post.save();
+        delete newPost['_doc']['__v'];
         const response = {
-            ...result['_doc'],
+            ...newPost['_doc'],
             request: {
                 type: 'GET',
-                url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + result._id 
+                url: req.protocol + '://' + req.headers.host + req.baseUrl + '/' + newPost._id 
             }
         };
         res.status(201).json(response);
-    }).catch(err => {
+    } catch (err) {
         console.log(err);
         res.status(500).json({
             error: err
         });
-    });
+    }
 };
 
-exports.posts_update_post = (req, res, next) => {
+exports.posts_update_post = (req, res, next) => { //TODO: Add process image like character controller
     const id = req.params.postId;
     const updateOps = {};
 
@@ -162,3 +150,33 @@ exports.posts_delete_post = (req, res, next) => {
             });
         });
 };
+
+function checkTagsExist(postTags, allTags) {
+    let tagsExist = true;
+    for (const postTag of postTags) {
+        let tagExist = false;
+        for (const tag of allTags) {
+            if (tag._id == postTag) {
+                tagExist = true
+                break;
+            }
+        }
+        if (!tagExist) {
+            tagsExist = false;
+            break;
+        }
+    }
+    return tagsExist;
+}
+
+async function processPostImage(image) {
+    try {
+        await sharp(image)
+            .resize(1080, 720)
+            .webp({ quality: 50 })
+            .toFile(`${image}.webp`);
+        fs.unlink(image, (err) => { if (err) throw err });
+    } catch (err) {
+        throw(err);
+    }
+}

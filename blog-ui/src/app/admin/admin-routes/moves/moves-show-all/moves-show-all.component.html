@@ -1,0 +1,9 @@
+<div class="mx-auto">
+    <ul class="list-unstyled mx-2">
+        <li class="my-4 mx-auto" *ngFor="let move of moves">
+            <div class="text-center" (click)="onClick(move._id)">
+                <h1>{{move.name}}</h1>
+            </div>
+        </li>
+    </ul>
+</div>

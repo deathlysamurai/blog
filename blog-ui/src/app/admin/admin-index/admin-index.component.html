@@ -1,5 +1,4 @@
-<div class="container">
-    <h1 class="text-center m-5">Create Character</h1>
+<!-- <div class="container">
     <div class="content-card p-5 mx-auto">
         <div>
             <h3 class="d-inline-block mr-4">Characters:</h3>
@@ -23,5 +22,18 @@
             <h3 class="d-inline-block mr-4">Users:</h3>
             <button routerLink="/admin/users/users-show-all">Show All Users</button>
         </div>
+    </div>
+</div> -->
+
+<div class="content-page">
+    <div class="content-page-list">
+        <h1 class="characters m-3 p-2" routerLinkActive="active" routerLink="/admin/characters/">Characters</h1>
+        <h1 class="moves m-3 p-2" routerLinkActive="active" routerLink="/admin/moves/">Moves</h1>
+        <h1 class="posts m-3 p-2" routerLinkActive="active" routerLink="/admin/posts/posts-create-post">Posts</h1>
+        <h1 class="tags m-3 p-2" routerLinkActive="active" routerLink="/admin/tags/tags-create-tag">Tags</h1>
+        <h1 class="users m-3 p-2" routerLinkActive="active" routerLink="/admin/users/users-show-all">Users</h1>
+    </div>
+    <div class="content pb-5">
+        <router-outlet></router-outlet>
     </div>
 </div>

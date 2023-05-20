@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/core/data/services/user/user.service';
 import { ValidationService } from 'src/app/shared/validation/validation.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-users-register',
@@ -14,7 +15,9 @@ export class UsersRegisterComponent implements OnInit {
   registrationForm: FormGroup = {} as FormGroup;
   user: User = {} as User;
 
-  constructor(private userService: UserService, private validationService: ValidationService, private fb: FormBuilder, private router: Router) { }
+  constructor(private userService: UserService, private validationService: ValidationService, private fb: FormBuilder, private router: Router, private titleService: Title) { 
+    this.titleService.setTitle("Join Now");
+  }
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({

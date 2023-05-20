@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/core/data/services/post/post.service';
 import { Post } from 'src/app/core/data/models/post.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-posts-show-all',
@@ -11,7 +12,9 @@ export class PostsShowAllComponent implements OnInit {
   posts!: Post[];
   totalPosts!: number;
 
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private titleService: Title) {
+    this.titleService.setTitle("Posts");
+  }
 
   ngOnInit(): void {
     this.getPosts();

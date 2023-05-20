@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/core/data/services/user/user.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-users-login',
@@ -15,7 +16,9 @@ export class UsersLoginComponent implements OnInit {
   user: User = {} as User;
   invalidLogin: boolean = false;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
+  constructor(private userService: UserService, private authService: AuthService, private router: Router, private titleService: Title) { 
+    this.titleService.setTitle("Sign In");
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({

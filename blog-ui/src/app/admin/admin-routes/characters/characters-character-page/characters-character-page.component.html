@@ -1,0 +1,9 @@
+<div>
+    <h1 class="text-center p-2 pt-3 mb-0">{{character?.name}}</h1>
+</div>
+<div class="content-page-list w-100 text-center">
+    <h1 class="character m-3 p-2 active" (click)="newPage('character')">Character Info</h1>
+</div>
+<div class="content pb-5">
+    <app-character *ngIf="currentPage === 'character' && character" [character]="character" (updateCharacterEvent)="getCharacter()"></app-character>
+</div>

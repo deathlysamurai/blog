@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/data/models/user.model';
 import { UserService } from 'src/app/core/data/services/user/user.service';
@@ -21,7 +22,10 @@ export class PasswordComponent implements OnInit {
               private authService: AuthService,
               private validationService: ValidationService,
               private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private titleService: Title) { 
+                this.titleService.setTitle("Account - Change Password");
+              }
 
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();

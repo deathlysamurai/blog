@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="content-card">
+        <div class="admin-route-nav">
+            <div class="admin-route-link" 
+                routerLink="/admin/moves/" 
+                routerLinkActive="active"
+                [routerLinkActiveOptions]={exact:true}
+            >
+                <div>Show All Moves</div>
+            </div>
+            <div class="admin-route-link" 
+                routerLink="/admin/moves/moves-create-move" 
+                routerLinkActive="active"
+                [routerLinkActiveOptions]={exact:true}
+            >
+                <div>Create Move</div>
+            </div>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

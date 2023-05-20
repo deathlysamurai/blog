@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { User, UserClass } from 'src/app/core/data/models/user.model';
 import { UserService } from 'src/app/core/data/services/user/user.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -18,7 +19,10 @@ export class AccountComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private validationService: ValidationService,
               private userService: UserService,
-              private authService: AuthService) { }
+              private authService: AuthService, 
+              private titleService: Title) { 
+                this.titleService.setTitle("Account - Info");
+              }
 
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
